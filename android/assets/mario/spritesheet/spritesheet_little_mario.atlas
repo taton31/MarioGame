@@ -1,0 +1,103 @@
+little_mario.png
+size: 236, 18
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+mario_die
+  rotate: true
+  xy: 173, 1
+  size: 16, 15
+  orig: 16, 16
+  offset: 0, 1
+  index: -1
+mario_jump
+  rotate: false
+  xy: 1, 1
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+mario_rest
+  rotate: false
+  xy: 190, 1
+  size: 14, 16
+  orig: 16, 16
+  offset: 1, 0
+  index: -1
+mario_run_1
+  rotate: false
+  xy: 37, 1
+  size: 15, 16
+  orig: 16, 16
+  offset: 1, 0
+  index: 1
+mario_run_2
+  rotate: false
+  xy: 222, 1
+  size: 13, 16
+  orig: 16, 16
+  offset: 2, 0
+  index: 2
+mario_run_3
+  rotate: false
+  xy: 19, 1
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+mario_sit_1
+  rotate: false
+  xy: 54, 1
+  size: 15, 16
+  orig: 16, 16
+  offset: 1, 0
+  index: 1
+mario_sit_2
+  rotate: false
+  xy: 206, 1
+  size: 14, 16
+  orig: 16, 16
+  offset: 1, 0
+  index: 2
+mario_stop
+  rotate: false
+  xy: 71, 1
+  size: 15, 16
+  orig: 16, 16
+  offset: 1, 0
+  index: -1
+mario_swim_1
+  rotate: false
+  xy: 88, 1
+  size: 15, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+mario_swim_2
+  rotate: false
+  xy: 105, 1
+  size: 15, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+mario_swim_3
+  rotate: false
+  xy: 122, 1
+  size: 15, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+mario_swim_4
+  rotate: false
+  xy: 139, 1
+  size: 15, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+mario_swim_5
+  rotate: false
+  xy: 156, 1
+  size: 15, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 5
