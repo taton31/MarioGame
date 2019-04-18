@@ -77,6 +77,7 @@ public class Map {
         tiledMapRenderer.render();
     }
 
+
     public Vector2 collisium(float[] body_first, float[] body_second){
         RESULT.set(-111,111);
         result.set(0,0);
