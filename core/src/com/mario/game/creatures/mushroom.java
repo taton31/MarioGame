@@ -36,6 +36,7 @@ public class mushroom {
     private TextureRegion mushDie;
     public TextureRegion region;
 
+
     private Texture texture;
 
     public mushroom (float x, float y, final play_game a, Mario mar){
@@ -134,6 +135,7 @@ public class mushroom {
         coll_mar.set(playGame.map.collisium(shape, mario.shape));
         if (!coll_mar.epsilonEquals(0,0)) {
             if (coll_mar.y > 0) {
+                mario.stomp.play();
                 DIE = true;
                 mario.velocity.y = velocity_jump / 1.6f;
             } else {

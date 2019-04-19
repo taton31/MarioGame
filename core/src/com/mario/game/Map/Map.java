@@ -1,5 +1,7 @@
 package com.mario.game.Map;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -29,6 +31,8 @@ public class Map {
     private Vector2 temporary_point, proj_firsec_point1, proj_firsec_point2;
     private Vector2 [] vec;
 
+    Music gameMusic;
+
     public Array<mushroom> mush_array;
 
     public Map(play_game PlayGa, String fileName, OrthographicCamera cam) {
@@ -41,9 +45,12 @@ public class Map {
         pipes = new Pipes(this, cam);
         coins = new Coins(this, cam);
         mush_array = new Array<mushroom>();
-        //new mushroom(155,155,PlayGame);
+        mush_array.add(new mushroom(10*16*PlayGame.game.ratioY, 5*16*PlayGame.game.ratioY, PlayGame, PlayGame.mario));
         mush_array.add(new mushroom(10*16*PlayGame.game.ratioY, 3*16*PlayGame.game.ratioY, PlayGame, PlayGame.mario));
 
+        gameMusic = Gdx.audio.newMusic(Gdx.files.internal("music/mariomusic/mario_music.ogg"));
+        gameMusic.setLooping(true);
+        gameMusic.play();
         set = new HashSet<Vector2>();
 
         RESULT = new Vector2(111,111);

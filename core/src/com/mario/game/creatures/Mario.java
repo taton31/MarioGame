@@ -1,6 +1,7 @@
 package com.mario.game.creatures;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -62,7 +63,11 @@ public class Mario {
 
     private Texture texture;
 
+    public Sound stomp;
+
     public Mario(float x, float y, final play_game a){
+        stomp = Gdx.audio.newSound(Gdx.files.internal("music/sounds/stomp.wav"));
+
         playGame = a;
         health = 3;
         RATIO = playGame.game.ratioY;
