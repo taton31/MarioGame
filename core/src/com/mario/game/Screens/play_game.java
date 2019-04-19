@@ -1,4 +1,4 @@
-package com.mario.game;
+package com.mario.game.Screens;
 
 
 import com.badlogic.gdx.Gdx;
@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mario.game.HUD.Scene;
 import com.mario.game.Map.Map;
+import com.mario.game.MarioGame;
 import com.mario.game.creatures.Mario;
 import com.mario.game.creatures.mushroom;
 

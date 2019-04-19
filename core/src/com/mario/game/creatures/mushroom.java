@@ -1,12 +1,11 @@
 package com.mario.game.creatures;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.mario.game.play_game;
+import com.mario.game.Screens.play_game;
 
 import java.util.HashSet;
 
@@ -136,6 +135,7 @@ public class mushroom {
         if (!coll_mar.epsilonEquals(0,0)) {
             if (coll_mar.y > 0) {
                 DIE = true;
+                mario.velocity.y = velocity_jump / 1.6f;
             } else {
                 mario.marioIsDead = true;
             }

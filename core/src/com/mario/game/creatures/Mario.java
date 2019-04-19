@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.mario.game.play_game;
+import com.mario.game.Screens.play_game;
 
 import java.util.HashSet;
 
@@ -15,7 +15,7 @@ public class Mario {
     private final play_game playGame;
 
     public Vector2 position;
-    private Vector2 velocity;
+    public Vector2 velocity;
     private Vector2 acceleration;
 
     public int velocity_start;

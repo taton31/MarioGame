@@ -10,7 +10,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.mario.game.creatures.mushroom;
-import com.mario.game.play_game;
+import com.mario.game.Screens.play_game;
 
 import java.util.HashSet;
 

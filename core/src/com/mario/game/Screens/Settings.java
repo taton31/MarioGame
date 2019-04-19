@@ -1,4 +1,4 @@
-package com.mario.game;
+package com.mario.game.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -10,20 +10,21 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mario.game.MarioGame;
 
 
-public class main_menu_screen implements Screen {
+public class Settings implements Screen {
 
     private final MarioGame game;
-    private Stage stage;
-    private TextButton play, exit;
+    //private final main_menu_screen menu_screen;
+    public Stage stage;
+    private TextButton music, exit;
     private TextButton.TextButtonStyle textButtonStyle;
     private Table table;
     private SpriteBatch batch;
 
-    main_menu_screen(final MarioGame gam){
+    Settings (final MarioGame gam){
         game = gam;
-
         stage = new Stage(new ScreenViewport());
         textButtonStyle = new TextButton.TextButtonStyle();
         table = new Table();
@@ -32,37 +33,39 @@ public class main_menu_screen implements Screen {
 
         game.font.getData().setScale(2f);
         textButtonStyle.font = game.font;
-        play = new TextButton("PLAY", textButtonStyle);
-        exit = new TextButton("EXIT", textButtonStyle);
+
+        music = new TextButton(game.MUS_ON ? "MUSIC ON" : "MUSIC OFF", textButtonStyle);
+        exit = new TextButton("<-", textButtonStyle);
 
 
-        play.addListener(new ClickListener(){
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                game.setScreen(new play_game(game));
-                dispose();
-            }
-        });
+        music.addListener(new ClickListener() {
+                              @Override
+                              public void clicked(InputEvent event, float x, float y) {
+                                  if (game.MUS_ON) {
+                                      game.MUS_ON = false;
+                                      music.setText("MUSIC OFF");
+                                  } else {
+                                      game.MUS_ON = true;
+                                      music.setText("MUSIC ON");
+                                  }
+                              }
+                          });
+
 
         exit.addListener(new ClickListener(){
             @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                game.dispose();
-                Gdx.app.exit();
-                dispose();
+            public void clicked(InputEvent event, float x, float y){
+                Gdx.input.setInputProcessor(game.menu_screen.stage);
+                game.setScreen(game.menu_screen);
+
             }
         });
 
-        table.add(play).width(100).height(100);
-        table.row();
-        table.add (exit);
-
-
+        exit.setPosition(15, 15);
+        table.add(music);
 
         stage.addActor(table);
-
-        Gdx.input.setInputProcessor(stage);
-        Gdx.input.setCatchBackKey(true);
+        stage.addActor(exit);
 
     }
 
@@ -104,6 +107,6 @@ public class main_menu_screen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-        game.dispose();
+        //game.dispose();
     }
 }
