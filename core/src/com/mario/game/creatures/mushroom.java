@@ -133,11 +133,11 @@ public class mushroom {
             return;
         }
         coll_mar.set(playGame.map.collisium(shape, mario.shape));
-        if (!coll_mar.epsilonEquals(0,0)) {
+        if (!coll_mar.epsilonEquals(0,0) && !mario.marioIsDead) {
             if (coll_mar.y > 0) {
-                mario.stomp.play();
                 DIE = true;
                 mario.velocity.y = velocity_jump / 1.6f;
+                if (playGame.game.MUS_ON) mario.stomp.play();
             } else {
                 mario.mario_dead();
             }

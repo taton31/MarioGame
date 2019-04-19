@@ -64,9 +64,14 @@ public class Mario {
     private Texture texture;
 
     public Sound stomp;
+    public Sound mariodie;
 
     public Mario(float x, float y, final play_game a){
         stomp = Gdx.audio.newSound(Gdx.files.internal("music/sounds/stomp.wav"));
+        mariodie = Gdx.audio.newSound(Gdx.files.internal("music/sounds/mariodie.wav"));
+        //stomp = Gdx.audio.newSound(Gdx.files.internal("music/sounds/stomp.wav"));
+        //stomp = Gdx.audio.newSound(Gdx.files.internal("music/sounds/stomp.wav"));
+        //stomp = Gdx.audio.newSound(Gdx.files.internal("music/sounds/stomp.wav"));
 
         playGame = a;
         health = 3;
@@ -93,6 +98,10 @@ public class Mario {
 
     public void  update (float delta){
 
+        if (marioIsDead){
+            mario_dead_update(delta);
+            return;
+        }
 
         update_velocity(delta);
         collisium();
@@ -385,6 +394,22 @@ public class Mario {
 
     public void mario_dead (){
         marioIsDead = true;
-        ///music
+        stateTimer = 0;
+        velocity.set(0,velocity_jump);
+        acceleration.set(0,0);
+        getFrame(0);
+        mariodie.play();
+        playGame.map.gameMusic.stop();
+    }
+
+    private void mario_dead_update(float delta){
+        stateTimer += delta;
+        if (stateTimer > 4f)
+        if (stateTimer < 0.5f) return;
+        acceleration.set(0, -acceleration_G);
+        velocity.x = 0;
+        velocity.y += acceleration.y * delta;
+        if (velocity.y < -velocity_jump) velocity.y = -velocity_jump;
+        position.y += velocity.y * delta;
     }
 }

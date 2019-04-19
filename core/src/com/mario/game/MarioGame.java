@@ -11,6 +11,8 @@ public class MarioGame extends Game {
 	public static final int WIDTH = 400;
 	public static final int HEIGHT = 208;
 	public boolean MUS_ON = true;
+	public int mario_health;
+	public int number_world;
 	public main_menu_screen menu_screen;
 
 	public float ratioX, ratioY;

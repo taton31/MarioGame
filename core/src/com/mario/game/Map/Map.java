@@ -30,8 +30,8 @@ public class Map {
     private Vector2 proj_first_point1, proj_first_point2, proj_second_point1, proj_second_point2;
     private Vector2 temporary_point, proj_firsec_point1, proj_firsec_point2;
     private Vector2 [] vec;
-
-    Music gameMusic;
+// в конструкторе должно быть количесв=тво монет и колво жизней марио
+    public Music gameMusic;
 
     public Array<mushroom> mush_array;
 
@@ -50,7 +50,8 @@ public class Map {
 
         gameMusic = Gdx.audio.newMusic(Gdx.files.internal("music/mariomusic/mario_music.ogg"));
         gameMusic.setLooping(true);
-        gameMusic.play();
+        if (PlayGame.game.MUS_ON) gameMusic.play();
+
         set = new HashSet<Vector2>();
 
         RESULT = new Vector2(111,111);
