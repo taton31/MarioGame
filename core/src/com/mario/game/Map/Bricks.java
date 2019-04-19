@@ -5,10 +5,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Disposable;
 
 import java.util.HashSet;
 
-public class Bricks {
+public class Bricks{
 // элементы брикс могут быть только кубиками 1 на 1!!!!!!!!!!!!!!!!!!!!!!
     private MapObjects bricks;
     private Map map;
@@ -143,6 +144,5 @@ public class Bricks {
         }
         return false;
     }
-
 
 }

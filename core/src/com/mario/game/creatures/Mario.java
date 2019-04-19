@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Disposable;
+import com.mario.game.Map.Map;
+import com.mario.game.Screens.GameOver;
 import com.mario.game.Screens.play_game;
 
 import java.util.HashSet;
@@ -37,6 +40,7 @@ public class Mario {
 
     private HashSet<Vector2> bias, bias_ground, bias_bricks, bias_coins, bias_pipes;
     public float[] shape;
+
 
     public enum State { FALLING, JUMPING, STANDING, RUNNING, GROWING, DEAD}
     private State currentState;
@@ -399,17 +403,40 @@ public class Mario {
         acceleration.set(0,0);
         getFrame(0);
         mariodie.play();
-        playGame.map.gameMusic.stop();
+        playGame.game.gameMusic.stop();
     }
 
     private void mario_dead_update(float delta){
         stateTimer += delta;
-        if (stateTimer > 4f)
+        if (stateTimer > 4f) {
+
+            //playGame.game.mario_health -= 1;
+            if (playGame.game.mario_health == 0){
+                playGame.game.setScreen(new GameOver(playGame.game));
+            }
+            mario_clean();
+            playGame.map.dispose();
+            playGame.map = new Map(playGame,  "tile/map1.tmx",playGame.camera);
+
+
+        }
         if (stateTimer < 0.5f) return;
         acceleration.set(0, -acceleration_G);
         velocity.x = 0;
         velocity.y += acceleration.y * delta;
         if (velocity.y < -velocity_jump) velocity.y = -velocity_jump;
         position.y += velocity.y * delta;
+    }
+
+    public void mario_clean(){
+        playGame.scene.timer = 0;
+        marioIsDead = false;
+        position = new Vector2(100, 100);
+        velocity = new Vector2(0, 0);
+        acceleration = new Vector2(0, -acceleration_G);
+        get_shape();
+
+        playGame.camera.position.x = Gdx.graphics.getWidth() / 2f;
+        playGame.camera.position.y = Gdx.graphics.getHeight() / 2f;
     }
 }

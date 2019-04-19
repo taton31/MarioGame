@@ -38,7 +38,7 @@ public class play_game implements Screen {
         batch = new SpriteBatch();
         mario = new Mario(100,250, this);
         map = new Map(this,  "tile/map1.tmx", camera);
-        scene = new Scene(batch, mario);
+        scene = new Scene(batch, mario, game);
     }
 
 
@@ -49,12 +49,25 @@ public class play_game implements Screen {
 
     @Override
     public void render(float delta) {
+
+        Gdx.gl.glClearColor(0, 0, 0f, 1);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        if (scene.timer < 3){
+            scene.start_game();
+            batch.begin();
+            batch.draw(scene.texture, camera.position.x - 27, camera.position.y, 32, 32);
+            batch.end();
+
+            scene.stage.act(delta);
+            scene.stage.draw();
+            return;
+        }
+
         //time_render += delta;
         update(delta);
         //if (time_render > 1/60f) {
-            Gdx.gl.glClearColor(0.5176f, 0.5176f, 1f, 1);
-            Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
             camera.update();
             map.render();

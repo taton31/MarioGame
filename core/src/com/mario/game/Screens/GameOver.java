@@ -23,7 +23,7 @@ public class GameOver implements Screen {
     private Label gam_ov;
     float time;
 
-    GameOver (final MarioGame gam){
+    public GameOver (final MarioGame gam){
         game = gam;
         stage = new Stage(new ScreenViewport());
         time = 0;

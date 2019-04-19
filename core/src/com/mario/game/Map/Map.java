@@ -11,12 +11,13 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Disposable;
 import com.mario.game.creatures.mushroom;
 import com.mario.game.Screens.play_game;
 
 import java.util.HashSet;
 
-public class Map {
+public class Map implements Disposable {
     play_game PlayGame;
     TiledMap tiledMap;
     private TiledMapRenderer tiledMapRenderer;
@@ -31,7 +32,6 @@ public class Map {
     private Vector2 temporary_point, proj_firsec_point1, proj_firsec_point2;
     private Vector2 [] vec;
 // в конструкторе должно быть количесв=тво монет и колво жизней марио
-    public Music gameMusic;
 
     public Array<mushroom> mush_array;
 
@@ -48,9 +48,8 @@ public class Map {
         mush_array.add(new mushroom(10*16*PlayGame.game.ratioY, 5*16*PlayGame.game.ratioY, PlayGame, PlayGame.mario));
         mush_array.add(new mushroom(10*16*PlayGame.game.ratioY, 3*16*PlayGame.game.ratioY, PlayGame, PlayGame.mario));
 
-        gameMusic = Gdx.audio.newMusic(Gdx.files.internal("music/mariomusic/mario_music.ogg"));
-        gameMusic.setLooping(true);
-        if (PlayGame.game.MUS_ON) gameMusic.play();
+
+
 
         set = new HashSet<Vector2>();
 
@@ -296,5 +295,10 @@ public class Map {
         ground_rect[5] = y + height;
         ground_rect[6] = x;
         ground_rect[7] = y + height;
+    }
+
+    @Override
+    public void dispose() {
+        tiledMap.dispose();
     }
 }
