@@ -17,19 +17,23 @@ public class Mario {
     public Vector2 position;
     public Vector2 velocity;
     private Vector2 acceleration;
+    private int health;
 
     public int velocity_start;
     public int acceleration_G;
     public int velocity_jump;
     public int max_velocity;
     public float koff_acc;
+
     private float sign_velocity = 0;
     private boolean press_button = false;
     private boolean press_button_up = false;
     private boolean stayOnGround;
+
     public final float RATIO;
     public final int width;
     public final int height;
+
     private HashSet<Vector2> bias, bias_ground, bias_bricks, bias_coins, bias_pipes;
     public float[] shape;
 
@@ -60,7 +64,7 @@ public class Mario {
 
     public Mario(float x, float y, final play_game a){
         playGame = a;
-
+        health = 3;
         RATIO = playGame.game.ratioY;
         velocity_start = (int) ( 200 * RATIO);
         velocity_jump = (int) ( 201 * RATIO);
@@ -161,6 +165,7 @@ public class Mario {
             velocity.y = velocity_jump;
             press_button_up = true;
             stayOnGround = false;
+            currentState = State.JUMPING;
         }
     }
 
@@ -287,6 +292,7 @@ public class Mario {
         for (Vector2 vec : bias) {
             position.x += vec.x;
             position.y += vec.y;
+            if (velocity.hasSameDirection(vec)) continue;
             vec.rotate90(1).nor();
             if (vec.hasOppositeDirection(velocity)) vec.scl(-1);
             velocity.set(vec.scl(vec.dot(velocity)));
@@ -370,5 +376,10 @@ public class Mario {
             }
             bias.add(vec);
         }
+    }
+
+    public void mario_dead (){
+        marioIsDead = true;
+        ///music
     }
 }

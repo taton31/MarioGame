@@ -137,7 +137,7 @@ public class mushroom {
                 DIE = true;
                 mario.velocity.y = velocity_jump / 1.6f;
             } else {
-                mario.marioIsDead = true;
+                mario.mario_dead();
             }
         }
     }
