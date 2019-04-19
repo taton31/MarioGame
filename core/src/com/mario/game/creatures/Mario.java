@@ -408,9 +408,9 @@ public class Mario {
 
     private void mario_dead_update(float delta){
         stateTimer += delta;
-        if (stateTimer > 4f) {
+        if (stateTimer > 2.5f) {
 
-            //playGame.game.mario_health -= 1;
+            playGame.game.mario_health -= 1;
             if (playGame.game.mario_health == 0){
                 playGame.game.setScreen(new GameOver(playGame.game));
             }
