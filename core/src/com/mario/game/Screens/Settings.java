@@ -16,7 +16,6 @@ import com.mario.game.MarioGame;
 public class Settings implements Screen {
 
     private final MarioGame game;
-    //private final main_menu_screen menu_screen;
     public Stage stage;
     private TextButton music, exit;
     private TextButton.TextButtonStyle textButtonStyle;

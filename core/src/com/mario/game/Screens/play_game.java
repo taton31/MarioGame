@@ -67,6 +67,7 @@ public class play_game implements Screen {
             batch.end();
 
             batch.setProjectionMatrix(scene.stage.getCamera().combined);
+            scene.stage.act(delta);
             scene.stage.draw();
             //time_render = 0f;
         //}
