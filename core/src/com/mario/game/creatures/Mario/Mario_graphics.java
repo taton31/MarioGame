@@ -58,7 +58,7 @@ import com.badlogic.gdx.utils.Array;
             return Mario.State.DEAD;
         else if(mario.runGrowAnimation)
             return Mario.State.GROWING;
-        else if((mario.velocity.y > 0 && mario.currentState == Mario.State.JUMPING) || (mario.velocity.y < 0 && mario.previousState == Mario.State.JUMPING))
+        else if(mario.currentState == Mario.State.JUMPING && !mario.stayOnGround)
             return Mario.State.JUMPING;
         else if(mario.velocity.y < 0)
             return Mario.State.FALLING;

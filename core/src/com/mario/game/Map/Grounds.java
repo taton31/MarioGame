@@ -10,12 +10,12 @@ import java.util.HashSet;
 
 public class Grounds {
 
-    private MapObjects grounds;
+    private MapObjects objects;
     private Map map;
     private OrthographicCamera camera;
 
-    private float[] ground_rect;
-    public final float[][] grounds_rectangle;
+    private float[] rectangle_object;
+    public final float[][] rectangle_objects;
     public final int length;
     private int i;
     private int j;
@@ -26,17 +26,17 @@ public class Grounds {
     Grounds(Map ma, OrthographicCamera cam){
         camera = cam;
         map = ma;
-        grounds = map.tiledMap.getLayers().get("ground").getObjects();
-        length = grounds.getCount();
-        ground_rect = new float[8];
-        grounds_rectangle = new float[length][8];
+        objects = map.tiledMap.getLayers().get("ground").getObjects();
+        length = objects.getCount();
+        rectangle_object = new float[8];
+        rectangle_objects = new float[length][8];
         temporary = new Vector2(0,0);
         set = new HashSet<Vector2>();
         temporary_arr = new Vector2[2];
         temporary_arr[0] = new Vector2();
         temporary_arr[1] = new Vector2(0,0);
 
-        get_grounds_rectangle();
+        get_rectangle_objects();
     }
 
     public HashSet<Vector2> collisium (float [] rectangle){
@@ -45,9 +45,9 @@ public class Grounds {
         temporary_arr[1].set(0,0);
 
         for (i = 0; i < length ; ++i){
-            if (!check_camera(grounds_rectangle[i])) continue;
+            if (!check_camera(rectangle_objects[i])) continue;
 
-            temporary.set(map.collisium(grounds_rectangle[i], rectangle));
+            temporary.set(map.collisium(rectangle_objects[i], rectangle));
 
             //temporary.x += 0.1*Math.signum(temporary.x);
             if (temporary.epsilonEquals(0,0)) continue;
@@ -75,13 +75,13 @@ public class Grounds {
 
 
 
-    private void get_grounds_rectangle() {
+    private void get_rectangle_objects() {
         j=0;
         i=0;
-        for (MapObject cell : grounds) {
-            map.get_rectangle(cell, ground_rect);
+        for (MapObject cell : objects) {
+            map.get_rectangle(cell, rectangle_object);
             for (i=0 ; i < 8; ++i){
-                grounds_rectangle[j][i] = ground_rect[i];
+                rectangle_objects[j][i] = rectangle_object[i];
             }
             ++j;
         }

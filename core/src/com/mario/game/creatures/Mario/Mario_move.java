@@ -68,6 +68,8 @@ class Mario_move{
         mario.position.x += mario.velocity.x * delta;
         mario.position.y += mario.velocity.y * delta;
 
+        if (mario.position.y < 0) mario.setMarioDead();
+
     }
 
     private void camera_setPosition(float delta){
@@ -106,7 +108,7 @@ class Mario_move{
 
 
         }
-        if (mario.stateTimer < 0.5f) return;
+        if (mario.stateTimer < 0.8f) return;
         mario.acceleration.set(0, -mario.acceleration_G);
         mario.velocity.x = 0;
         mario.velocity.y += mario.acceleration.y * delta;

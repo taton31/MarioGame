@@ -17,16 +17,16 @@ public class mushroom {
     public Vector2 position;
     private Vector2 velocity;
     private Vector2 acceleration;
-    Mario mario;
-    Vector2 coll_mar;
+    private Mario mario;
+    private Vector2 coll_mar;
 
-    public int acceleration_G;
-    public int velocity_jump;
-    public int max_velocity;
+    private  int acceleration_G;
+    private  int velocity_jump;
+    private  int max_velocity;
     private boolean running_right;
     private boolean DIE;
     public float die_time;
-    public final float RATIO;
+    private  final float RATIO;
     public final int width;
     public int height;
     private HashSet<Vector2> bias, bias_ground, bias_bricks, bias_coins, bias_pipes;
@@ -176,7 +176,7 @@ public class mushroom {
     }
 
 
-    public void check_sets(){
+    private void check_sets(){
         bias.addAll(bias_ground);
         for (Vector2 vec : bias_bricks){
             for (Vector2 b_vec : bias){

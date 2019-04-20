@@ -34,7 +34,7 @@ package com.mario.game.creatures.Mario;
     }
 
     void press_down (){
-        mario.press_button = true;
+        mario.press_button = false;
     }
 
     void press_fire (){
