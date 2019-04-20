@@ -83,7 +83,7 @@ public class Mario {
         mario_graphics = new Mario_graphics(this);
         mario_HUD = new Mario_HUD(this);
         mario_music = new Mario_music(this);
-        setMarioSize(true);
+        //setMarioSize(true);
     }
 
 
@@ -94,10 +94,13 @@ public class Mario {
     }
 
 
+    public float getX(){ return position.x; }
+
+    public float getY(){ return position.y; }
+
     public int getWidth(){ return width; }
 
     public int getHeight(){
-
         return height;
     }
 
@@ -114,6 +117,13 @@ public class Mario {
     }
 
     public Sound getStomp() { return stomp;}
+    public Sound getBreakblock() { return breakblock;}
+    public Sound getBump() { return bump;}
+    public Sound getCoin() { return coin;}
+    public Sound getMariodie() { return mariodie;}
+    public Sound getPowerdown() { return powerdown;}
+    public Sound getPowerup() { return powerup;}
+    public Sound getPowerup_spawn() { return powerup_spawn;}
 
     public boolean isMarioDead(){ return marioIsDead; }
 

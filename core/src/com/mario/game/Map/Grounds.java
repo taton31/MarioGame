@@ -6,14 +6,14 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.mario.game.creatures.Mario.Mario;
 
 import java.util.HashSet;
 
 public class Grounds extends MapObject_{
 
-    Grounds(Map ma, OrthographicCamera cam){
-        camera = cam;
-        map = ma;
+    Grounds(Map ma, OrthographicCamera cam, Mario mar){
+        super(ma, cam, mar);
         objects = map.tiledMap.getLayers().get("ground").getObjects();
         length = objects.getCount();
         rectangle_object = new float[8];

@@ -3,6 +3,7 @@ package com.mario.game.Map;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
@@ -12,9 +13,7 @@ import com.mario.game.Screens.play_game;
 
 
 public class Map extends Collisium implements Disposable  {
-    play_game PlayGame;
-    TiledMap tiledMap;
-    private TiledMapRenderer tiledMapRenderer;
+
     public Grounds grounds;
     public Bricks bricks;
     public Pipes pipes;
@@ -32,18 +31,14 @@ public class Map extends Collisium implements Disposable  {
         tiledMap = new TmxMapLoader().load(fileName);
         tiledMapRenderer = new OrthoCachedTiledMapRenderer(tiledMap, PlayGame.game.ratioY);
         ((OrthoCachedTiledMapRenderer) tiledMapRenderer).setBlending(true);
-        grounds = new Grounds(this, cam);
+        layer = (TiledMapTileLayer) tiledMap.getLayers().get("grounds");
+        grounds = new Grounds(this, cam, PlayGame.mario);
         bricks = new Bricks(this, cam, PlayGame.mario);
-        pipes = new Pipes(this, cam);
+        pipes = new Pipes(this, cam, PlayGame.mario);
         coins = new Coins(this, cam, PlayGame.mario);
         mush_array = new Array<Goomba>();
         mush_array.add(new Goomba(10*16*PlayGame.game.ratioY, 5*16*PlayGame.game.ratioY, PlayGame, PlayGame.mario));
         mush_array.add(new Goomba(10*16*PlayGame.game.ratioY, 3*16*PlayGame.game.ratioY, PlayGame, PlayGame.mario));
-
-
-
-
-
 
     }
 
@@ -64,4 +59,6 @@ public class Map extends Collisium implements Disposable  {
     public void dispose() {
         tiledMap.dispose();
     }
+
+
 }

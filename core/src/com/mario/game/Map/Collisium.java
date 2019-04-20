@@ -2,11 +2,23 @@ package com.mario.game.Map;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.mario.game.Screens.play_game;
 
 import java.util.HashSet;
 
 public abstract class Collisium {
+
+    play_game PlayGame;
+    TiledMap tiledMap;
+    protected TiledMapRenderer tiledMapRenderer;
+    TiledMapTileLayer layer;
+
+
     protected HashSet<Vector2> set;
     private Vector2 RESULT, result;
     private int i, j;
@@ -247,4 +259,15 @@ public abstract class Collisium {
         ground_rect[7] = y + height;
     }
 
+    void delete_tile (int a, int b){
+        TiledMapTileLayer layer = (TiledMapTileLayer) tiledMap.getLayers().get("grounds");
+        layer.getCell(a, b).setTile(null);
+        ((OrthoCachedTiledMapRenderer) tiledMapRenderer).invalidateCache();
+    }
+
+    void bump_tile (int a, int b){
+        TiledMapTileLayer layer = (TiledMapTileLayer) tiledMap.getLayers().get("grounds");
+        layer.getCell(a, b).getTile();
+        ((OrthoCachedTiledMapRenderer) tiledMapRenderer).invalidateCache();
+    }
 }

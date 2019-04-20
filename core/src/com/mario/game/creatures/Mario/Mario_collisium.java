@@ -31,9 +31,9 @@ import java.util.HashSet;
         mario.stayOnGround = false;
         mario.bias.clear();
         mario.bias_ground = mario.playGame.map.grounds.collisium(mario.shape);
-        mario.bias_bricks = mario.playGame.map.bricks.collisium(mario.shape);
         mario.bias_pipes = mario.playGame.map.pipes.collisium(mario.shape);
         mario.bias_coins = mario.playGame.map.coins.collisium(mario.shape);
+        mario.bias_bricks = mario.playGame.map.bricks.collisium(mario.shape);
         check_sets();
         can_jump(mario.bias);
         for (Vector2 vec : mario.bias) {

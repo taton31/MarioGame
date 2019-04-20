@@ -13,9 +13,7 @@ public class Coins extends MapObject_ {
     private final float tile_size;
 
     Coins(Map ma, OrthographicCamera cam, Mario mar){
-        mario = mar;
-        camera = cam;
-        map = ma;
+        super(ma, cam, mar);
         tile_size = 16 * map.PlayGame.game.ratioY;
         objects = map.tiledMap.getLayers().get("coins").getObjects();
         length = objects.getCount();

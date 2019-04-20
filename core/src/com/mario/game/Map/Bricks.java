@@ -18,9 +18,9 @@ public class Bricks extends MapObject_{
     private final float tile_size;
 
     Bricks(Map ma, OrthographicCamera cam, Mario mar){
-        mario = mar;
-        camera = cam;
-        map = ma;
+        super(ma, cam, mar);
+
+
         tile_size = 16 * map.PlayGame.game.ratioY;
         objects = map.tiledMap.getLayers().get("bricks").getObjects();
         length = objects.getCount();
@@ -124,14 +124,19 @@ public class Bricks extends MapObject_{
 
     void check_crash (Vector2 temp, int k){
         if (temp.x == 0 && temp.y < 0){
-            mapObjects.removeIndex(k);
-            TiledMapTileLayer layer = (TiledMapTileLayer) map.tiledMap.getLayers().get("grounds");
+            if (mario.isMarioBig()){
+                mario.getBreakblock().play();
+                map.delete_tile((int) (mapObjects.get(k).rectangle[0] / tile_size), (int) (mapObjects.get(k).rectangle[1] / tile_size));
+                mapObjects.removeIndex(k);
+            } else {
+                mario.getBump().play();
+                map.bump_tile((int) (mapObjects.get(k).rectangle[0] / tile_size), (int) (mapObjects.get(k).rectangle[1] / tile_size));
+            }
+
             //objects.remove(k-1);
 
             //layer.getCell(3,7).setRotation(33);//((int)((RectangleMapObject) objects.get(k)).getRectangle().getX(), (int)((RectangleMapObject) objects.get(k)).getRectangle().getY());
             //map.tiledMap.getLayers().get("grounds").getC
-            if (mario.isMarioBig()){
-            }
 
         }
     }

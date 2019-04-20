@@ -12,8 +12,8 @@ import java.util.HashSet;
 
 public abstract class MapObject_ {
     MapObjects objects;
-    protected Map map;
-    OrthographicCamera camera;
+    protected final Map map;
+    final OrthographicCamera camera;
     Mario mario;
 
     Array <MapObjects_rectangles> mapObjects;
@@ -24,6 +24,12 @@ public abstract class MapObject_ {
     Vector2 temporary;
     protected HashSet<Vector2> set;
     Vector2[] temporary_arr;
+
+    MapObject_(Map ma, OrthographicCamera cam, Mario mar){
+        map = ma;
+        mario = mar;
+        camera = cam;
+    }
 
     public HashSet<Vector2> collisium (float [] rectangle){
         set.clear();
@@ -79,5 +85,7 @@ public abstract class MapObject_ {
         return false;
     }
 
-
+    protected boolean choose_crash (int k){
+        return ((mario.getX() + mario.getWidth() / 2f > mapObjects.get(k).rectangle[0]) && (mario.getX() + mario.getWidth() / 2f < mapObjects.get(k).rectangle[2]));
+    }
 }
