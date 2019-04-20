@@ -2,7 +2,7 @@ package com.mario.game.creatures.Mario;
 
  class Mario_HUD{
 
-    Mario mario;
+    private Mario mario;
 
 
     Mario_HUD(Mario mar){
@@ -14,17 +14,17 @@ package com.mario.game.creatures.Mario;
         mario.koff_acc = 0.3f;
     }
 
-    public void press_right (){
+    void press_right (){
         mario.acceleration.x = mario.velocity_start;
         mario.press_button = true;
     }
 
-    public void press_left (){
+    void press_left (){
         mario.acceleration.x = - mario.velocity_start;
         mario.press_button = true;
     }
 
-    public void press_up (){
+    void press_up (){
         if (mario.stayOnGround) {
             mario.velocity.y = mario.velocity_jump;
             mario.press_button_up = true;
@@ -33,19 +33,19 @@ package com.mario.game.creatures.Mario;
         }
     }
 
-    public void press_down (){
+    void press_down (){
         mario.press_button = true;
     }
 
-    public void press_fire (){
+    void press_fire (){
 
     }
 
-    public void unpress_button (){
+    void unpress_button (){
         mario.press_button = false;
     }
 
-    public void unpress_button_up (){
+    void unpress_button_up (){
         mario.press_button_up = false;
     }
 }

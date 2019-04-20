@@ -4,9 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.mario.game.Map.Map;
 import com.mario.game.Screens.GameOver;
-import com.mario.game.Screens.play_game;
 
-public class Mario_move{
+class Mario_move{
     Mario mario;
 
     Mario_move(Mario mar, float x, float y){
@@ -84,7 +83,7 @@ public class Mario_move{
         }
     }
 
-    public void mario_dead (){
+    void mario_dead (){
         mario.marioIsDead = true;
         mario.stateTimer = 0;
         mario.velocity.set(0,mario.velocity_jump);
@@ -115,7 +114,7 @@ public class Mario_move{
         mario.position.y += mario.velocity.y * delta;
     }
 
-    public void mario_clean(){
+    void mario_clean(){
         mario.playGame.scene.timer = 0;
         mario.marioIsDead = false;
         mario.position = new Vector2(100, 100);

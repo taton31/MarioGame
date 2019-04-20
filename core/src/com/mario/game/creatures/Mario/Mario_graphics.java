@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Array;
 
  class Mario_graphics{
 
-    Mario mario;
+    private Mario mario;
 
 
     Mario_graphics(Mario mar){

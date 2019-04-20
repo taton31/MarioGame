@@ -68,7 +68,7 @@ import java.util.HashSet;
         mario.shape[11] = mario.position.y + 2 * mario.height / 3f;
     }
 
-    public void can_jump(HashSet<Vector2> set){
+    private void can_jump(HashSet<Vector2> set){
         if (mario.stayOnGround) return;
         for (Vector2 vec : set){
             if (vec.y > 0 && vec.x == 0) {
@@ -78,7 +78,7 @@ import java.util.HashSet;
         }
     }
 
-    public void check_sets(){
+    private void check_sets(){
         mario.bias.addAll(mario.bias_ground);
         for (Vector2 vec : mario.bias_bricks){
             for (Vector2 b_vec : mario.bias){

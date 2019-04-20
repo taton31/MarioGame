@@ -1,11 +1,10 @@
 package com.mario.game.creatures.Mario;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 
  class Mario_music{
 
-     Mario mario;
+     private Mario mario;
 
      Mario_music(Mario mar){
          mario = mar;

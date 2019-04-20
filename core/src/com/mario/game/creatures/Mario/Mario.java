@@ -1,15 +1,10 @@
 package com.mario.game.creatures.Mario;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Disposable;
-import com.mario.game.Map.Map;
-import com.mario.game.Screens.GameOver;
 import com.mario.game.Screens.play_game;
 
 import java.util.HashSet;
@@ -69,11 +64,11 @@ public class Mario {
      Texture texture;
 
 
-     Mario_move mario_move;
-     Mario_collisium mario_collisium;
-     Mario_HUD mario_HUD;
-     Mario_graphics mario_graphics;
-     Mario_music mario_music;
+     private Mario_move mario_move;
+     private Mario_collisium mario_collisium;
+     private Mario_HUD mario_HUD;
+     private Mario_graphics mario_graphics;
+     private Mario_music mario_music;
     public Mario(float x, float y, final play_game a){
         playGame = a;
         mario_move = new Mario_move(this, x, y);
