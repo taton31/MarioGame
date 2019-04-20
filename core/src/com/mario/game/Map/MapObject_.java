@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.math.Vector2;
+import com.mario.game.creatures.Mario.Mario;
 
 import java.util.HashSet;
 
@@ -12,6 +13,7 @@ public abstract class MapObject_ {
     MapObjects objects;
     protected Map map;
     OrthographicCamera camera;
+    Mario mario;
 
     float[] rectangle_object;
     float[][] rectangle_objects;

@@ -3,7 +3,11 @@ package com.mario.game.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.mario.game.creatures.Mario.Mario;
 
 import java.util.HashSet;
 
@@ -12,7 +16,8 @@ public class Bricks extends MapObject_{
 
     private final float tile_size;
 
-    Bricks(Map ma, OrthographicCamera cam){
+    Bricks(Map ma, OrthographicCamera cam, Mario mar){
+        mario = mar;
         camera = cam;
         map = ma;
         tile_size = 16 * map.PlayGame.game.ratioY;
@@ -55,6 +60,7 @@ public class Bricks extends MapObject_{
                 break;
             }
         }
+        check_crash(temporary, i);
         return set;
     }
 
@@ -120,6 +126,19 @@ public class Bricks extends MapObject_{
             }
         }
         return false;
+    }
+
+    void check_crash (Vector2 temp, int k){
+        if (temp.x == 0 && temp.y < 0){
+            TiledMapTileLayer layer = (TiledMapTileLayer) map.tiledMap.getLayers().get("grounds");
+            objects.remove(k-1);
+
+            //layer.getCell(3,7).setRotation(33);//((int)((RectangleMapObject) objects.get(k)).getRectangle().getX(), (int)((RectangleMapObject) objects.get(k)).getRectangle().getY());
+            //map.tiledMap.getLayers().get("grounds").getC
+            if (mario.isMarioBig()){
+            }
+
+        }
     }
 
 }

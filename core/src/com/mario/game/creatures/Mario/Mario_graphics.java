@@ -72,7 +72,7 @@ import com.badlogic.gdx.utils.Array;
         mario.currentState = getState();
 
         TextureRegion region;
-
+//добавить случай growdown и в нем сделать нулевую скорость и ускорение
         switch(mario.currentState){
             case DEAD:
                 region = mario.marioDead;

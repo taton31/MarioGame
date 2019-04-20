@@ -10,7 +10,7 @@ import com.mario.game.creatures.Mario.Mario;
 
 import java.util.HashSet;
 
-public class mushroom {
+public class Goomba {
 
     private final play_game playGame;
 
@@ -36,13 +36,13 @@ public class mushroom {
     public TextureRegion region;
 
 
-    public mushroom (float x, float y, final play_game a, Mario mar){
+    public Goomba(float x, float y, final play_game a, Mario mar){
         playGame = a;
         mario = mar;
         float RATIO = playGame.game.ratioY;
         DIE = false;
         running_right = false;
-        velocity_jump = (int) ( 201 * RATIO);
+        velocity_jump = (int) ( 301 * RATIO);
         max_velocity = (int) (30 * RATIO);
         int acceleration_G = (int) (1000 * RATIO);
 
@@ -70,19 +70,20 @@ public class mushroom {
     private void update_velocity (float delta){
         if (DIE){
             region = mushDie;
-        } else {
-            timer += delta;
-            if (timer > 10000) timer = 0;
-            velocity.x = running_right ? max_velocity : -max_velocity;
-            velocity.y = acceleration.y * delta;
-
-            region = mushRun.getKeyFrame(timer, true);
-
-            if (velocity.y < -velocity_jump) velocity.y = -velocity_jump;
-
-            position.x += velocity.x * delta;
-            position.y += velocity.y * delta;
+            return;
         }
+        timer = timer % 1000 + delta;
+
+        velocity.x = running_right ? max_velocity : -max_velocity;
+        velocity.y += acceleration.y * delta;
+
+        region = mushRun.getKeyFrame(timer, true);
+
+        if (velocity.y < -velocity_jump) velocity.y = -velocity_jump;
+
+        position.x += velocity.x * delta;
+        position.y += velocity.y * delta;
+
 
     }
 
@@ -91,11 +92,11 @@ public class mushroom {
     private void doAnimation(){
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
-        Texture texture = new Texture("enemy/goomba.png");
+        Texture texture = new Texture("enemy/Goomba.png");
 
         frames.add(new TextureRegion(texture, 0, 0, 16, 16));
         frames.add(new TextureRegion(texture, 16, 0, 16, 16));
-        mushRun = new Animation<TextureRegion>(0.1f, frames);
+        mushRun = new Animation<TextureRegion>(0.4f, frames);
 
         frames.clear();
 
@@ -136,6 +137,9 @@ public class mushroom {
                 mario.velocity.y = velocity_jump / 1.6f;
                 if (playGame.game.MUS_ON) mario.getStomp().play();
             } else {
+                if (mario.isMarioBig()){
+                    mario.setMarioSize(false);
+                }
                 mario.setMarioDead();
             }
         }

@@ -68,7 +68,10 @@ class Mario_move{
         mario.position.x += mario.velocity.x * delta;
         mario.position.y += mario.velocity.y * delta;
 
-        if (mario.position.y < 0) mario.setMarioDead();
+        if (mario.position.y < 0) {
+            mario.setHeight(false);
+            mario.setMarioDead();
+        }
 
     }
 

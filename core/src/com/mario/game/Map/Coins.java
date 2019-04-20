@@ -4,13 +4,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Vector2;
+import com.mario.game.creatures.Mario.Mario;
 
 import java.util.HashSet;
 
 public class Coins extends MapObject_ {
     private final float tile_size;
 
-    Coins(Map ma, OrthographicCamera cam){
+    Coins(Map ma, OrthographicCamera cam, Mario mar){
+        mario = mar;
         camera = cam;
         map = ma;
         tile_size = 16 * map.PlayGame.game.ratioY;

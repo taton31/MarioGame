@@ -37,6 +37,12 @@ public class Mario {
 
      Sound stomp;
      Sound mariodie;
+     Sound bump;
+     Sound breakblock;
+     Sound coin;
+     Sound powerdown;
+     Sound powerup;
+     Sound powerup_spawn;
 
      boolean stayOnGround;
      HashSet<Vector2> bias, bias_ground, bias_bricks, bias_coins, bias_pipes;
@@ -69,6 +75,7 @@ public class Mario {
      private Mario_HUD mario_HUD;
      private Mario_graphics mario_graphics;
      private Mario_music mario_music;
+
     public Mario(float x, float y, final play_game a){
         playGame = a;
         mario_move = new Mario_move(this, x, y);
@@ -76,6 +83,7 @@ public class Mario {
         mario_graphics = new Mario_graphics(this);
         mario_HUD = new Mario_HUD(this);
         mario_music = new Mario_music(this);
+        setMarioSize(true);
     }
 
 
@@ -89,7 +97,12 @@ public class Mario {
     public int getWidth(){ return width; }
 
     public int getHeight(){
+
         return height;
+    }
+
+    void setHeight(boolean a){
+        height = a ? (int) (30 * RATIO) : (int) (16 * RATIO);
     }
 
     public float getRATIO(){
@@ -104,7 +117,16 @@ public class Mario {
 
     public boolean isMarioDead(){ return marioIsDead; }
 
+    public boolean isMarioBig(){ return marioIsBig; }
+
     public void setMarioDead(){mario_move.mario_dead();}
+
+    public void setMarioSize(boolean a){
+        marioIsBig = a;
+        height = a ? (int) (30 * RATIO) : (int) (16 * RATIO);
+
+        (a ? powerup : powerdown).play();
+    }
 
     public void press_right(){
         mario_HUD.press_right();
