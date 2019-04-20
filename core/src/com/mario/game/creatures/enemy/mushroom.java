@@ -20,13 +20,11 @@ public class mushroom {
     private Mario mario;
     private Vector2 coll_mar;
 
-    private  int acceleration_G;
     private  int velocity_jump;
     private  int max_velocity;
     private boolean running_right;
     private boolean DIE;
     public float die_time;
-    private  final float RATIO;
     public final int width;
     public int height;
     private HashSet<Vector2> bias, bias_ground, bias_bricks, bias_coins, bias_pipes;
@@ -38,17 +36,15 @@ public class mushroom {
     public TextureRegion region;
 
 
-    private Texture texture;
-
     public mushroom (float x, float y, final play_game a, Mario mar){
         playGame = a;
         mario = mar;
-        RATIO = playGame.game.ratioY;
+        float RATIO = playGame.game.ratioY;
         DIE = false;
         running_right = false;
         velocity_jump = (int) ( 201 * RATIO);
         max_velocity = (int) (30 * RATIO);
-        acceleration_G = (int) (1000 * RATIO);
+        int acceleration_G = (int) (1000 * RATIO);
 
         coll_mar = new Vector2();
         bias = new HashSet<Vector2>();
@@ -95,7 +91,7 @@ public class mushroom {
     private void doAnimation(){
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
-        texture = new Texture("enemy/goomba.png");
+        Texture texture = new Texture("enemy/goomba.png");
 
         frames.add(new TextureRegion(texture, 0, 0, 16, 16));
         frames.add(new TextureRegion(texture, 16, 0, 16, 16));

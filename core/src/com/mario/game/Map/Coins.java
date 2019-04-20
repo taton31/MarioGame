@@ -3,14 +3,11 @@ package com.mario.game.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.HashSet;
 
 public class Coins extends MapObject_ {
-    // элементы coins могут быть только кубиками 1 на 1!!!!!!!!!!!!!!!!!!!!!!
-    private float proj_vec_x, proj_vec_y;
     private final float tile_size;
 
     Coins(Map ma, OrthographicCamera cam){
@@ -82,8 +79,9 @@ public class Coins extends MapObject_ {
     }
 
     private boolean check_direction(int i, Vector2 vec){
-        proj_vec_x = Math.signum(vec.x);
-        proj_vec_y = Math.signum(vec.y);
+        // элементы coins могут быть только кубиками 1 на 1!!!!!!!!!!!!!!!!!!!!!!
+        float proj_vec_x = Math.signum(vec.x);
+        float proj_vec_y = Math.signum(vec.y);
         float x, y;
 
         if (proj_vec_x != 0) {

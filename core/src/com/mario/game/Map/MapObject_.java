@@ -9,18 +9,18 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.HashSet;
 
 public abstract class MapObject_ {
-    protected MapObjects objects;
+    MapObjects objects;
     protected Map map;
-    protected OrthographicCamera camera;
+    OrthographicCamera camera;
 
-    protected float[] rectangle_object;
-    public float[][] rectangle_objects;
-    public int length;
-    protected int i;
-    protected int j;
-    protected Vector2 temporary;
+    float[] rectangle_object;
+    float[][] rectangle_objects;
+    int length;
+    int i;
+    int j;
+    Vector2 temporary;
     protected HashSet<Vector2> set;
-    protected Vector2[] temporary_arr;
+    Vector2[] temporary_arr;
 
     public HashSet<Vector2> collisium (float [] rectangle){
         set.clear();

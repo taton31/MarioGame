@@ -8,12 +8,12 @@ import java.util.HashSet;
 
 public abstract class Collisium {
     protected HashSet<Vector2> set;
-    protected Vector2 RESULT, result;
-    protected int i, j;
-    protected Vector2 proj_first_point1, proj_first_point2, proj_second_point1, proj_second_point2;
-    protected Vector2 temporary_point, proj_firsec_point1, proj_firsec_point2;
-    protected Vector2 [] vec;
-    protected float RATIO;
+    private Vector2 RESULT, result;
+    private int i, j;
+    private Vector2 proj_first_point1, proj_first_point2, proj_second_point1, proj_second_point2;
+    private Vector2 temporary_point, proj_firsec_point1, proj_firsec_point2;
+    private Vector2 [] vec;
+    private float RATIO;
 
     Collisium (float rat){
         RATIO = rat;

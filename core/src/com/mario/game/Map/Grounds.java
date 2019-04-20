@@ -8,20 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import java.util.HashSet;
 
-public class Grounds {
-
-    private MapObjects objects;
-    private Map map;
-    private OrthographicCamera camera;
-
-    private float[] rectangle_object;
-    public final float[][] rectangle_objects;
-    public final int length;
-    private int i;
-    private int j;
-    private Vector2 temporary;
-    private HashSet<Vector2> set;
-    private Vector2[] temporary_arr;
+public class Grounds extends MapObject_{
 
     Grounds(Map ma, OrthographicCamera cam){
         camera = cam;
@@ -87,7 +74,7 @@ public class Grounds {
         }
     }
 
-    private boolean check_camera (float [] a){
+    protected boolean check_camera (float [] a){
         if ( a[0] < camera.position.x && a[2] > camera.position.x ) return true;
         for (j = 0; j < (a.length / 2); ++j){
             if ( a[2 * j] > camera.position.x - Gdx.app.getGraphics().getWidth() / 2 && a[2 * j] < camera.position.x + Gdx.app.getGraphics().getWidth() / 2) return true;
@@ -95,7 +82,7 @@ public class Grounds {
         return false;
     }
 
-    private boolean has_collinear (Vector2 temp){
+    protected boolean has_collinear (Vector2 temp){
         for (Vector2 vec : set){
             if (vec.isCollinear(temp)) {
                 return true;

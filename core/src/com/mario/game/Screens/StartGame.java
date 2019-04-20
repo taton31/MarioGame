@@ -1,4 +1,4 @@
-package com.mario.game.Screens;
+/*package com.mario.game.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -97,3 +97,4 @@ public class StartGame implements Screen {
         //game.dispose();
     }
 }
+*/

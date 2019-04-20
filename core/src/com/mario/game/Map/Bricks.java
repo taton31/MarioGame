@@ -3,27 +3,13 @@ package com.mario.game.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Disposable;
 
 import java.util.HashSet;
 
 public class Bricks extends MapObject_{
 // элементы брикс могут быть только кубиками 1 на 1!!!!!!!!!!!!!!!!!!!!!!
-    private MapObjects objects;
-    private Map map;
-    private OrthographicCamera camera;
 
-    private float[] rectangle_object;
-    public final float[][] rectangle_objects;
-    public final int length;
-    private int i;
-    private int j;
-    private Vector2 temporary;
-    private HashSet<Vector2> set;
-    private Vector2[] temporary_arr;
-    private float proj_vec_x, proj_vec_y;
     private final float tile_size;
 
     Bricks(Map ma, OrthographicCamera cam){
@@ -95,8 +81,8 @@ public class Bricks extends MapObject_{
     }
 
     private boolean check_direction(int i, Vector2 vec){
-        proj_vec_x = Math.signum(vec.x);
-        proj_vec_y = Math.signum(vec.y);
+        float proj_vec_x = Math.signum(vec.x);
+        float proj_vec_y = Math.signum(vec.y);
         float x, y;
 
         if (proj_vec_x != 0) {

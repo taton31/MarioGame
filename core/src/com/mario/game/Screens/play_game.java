@@ -18,9 +18,9 @@ public class play_game implements Screen {
 
     public final MarioGame game;
 
-    SpriteBatch batch;
+    private SpriteBatch batch;
     public OrthographicCamera camera;
-    Viewport viewport;
+    private Viewport viewport;
     public Map map;
     public Mario mario;
     private float time_render = 0f;
@@ -28,7 +28,7 @@ public class play_game implements Screen {
     public Scene scene;
 
 
-    public play_game (final MarioGame gam){
+    play_game (final MarioGame gam){
         game=gam;
 
         camera = new OrthographicCamera();
@@ -109,7 +109,6 @@ public class play_game implements Screen {
     @Override
     public void dispose() {
         game.dispose();
-        this.dispose();
     }
 
     private void update (float delta){

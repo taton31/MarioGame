@@ -17,26 +17,21 @@ public class main_menu_screen implements Screen {
 
     private final MarioGame game;
     public Stage stage;
-    private TextButton play, exit, sett;
-    Settings settings;
-    private TextButton.TextButtonStyle textButtonStyle;
-    private Table table;
-    private SpriteBatch batch;
+    private Settings settings;
 
     public main_menu_screen(final MarioGame gam){
         game = gam;
         settings = new Settings(game);
         stage = new Stage(new ScreenViewport());
-        textButtonStyle = new TextButton.TextButtonStyle();
-        table = new Table();
-        batch = new SpriteBatch();
+        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
+        Table table = new Table();
         table.setFillParent(true);
 
         game.font.getData().setScale(2f);
         textButtonStyle.font = game.font;
-        play = new TextButton("PLAY", textButtonStyle);
-        sett = new TextButton("SETTINGS", textButtonStyle);
-        exit = new TextButton("EXIT", textButtonStyle);
+        TextButton play = new TextButton("PLAY", textButtonStyle);
+        TextButton sett = new TextButton("SETTINGS", textButtonStyle);
+        TextButton exit = new TextButton("EXIT", textButtonStyle);
 
 
         play.addListener(new ClickListener(){
