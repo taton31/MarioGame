@@ -7,6 +7,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.mario.game.creatures.Mario.Mario;
 
 import java.util.HashSet;
@@ -24,59 +25,52 @@ public class Bricks extends MapObject_{
         objects = map.tiledMap.getLayers().get("bricks").getObjects();
         length = objects.getCount();
         rectangle_object = new float[8];
-        rectangle_objects = new float[length][8];
         temporary = new Vector2(0,0);
         set = new HashSet<Vector2>();
         temporary_arr = new Vector2[2];
         temporary_arr[0] = new Vector2();
         temporary_arr[1] = new Vector2(0,0);
 
-        get_grounds_rectangle();
+        mapObjects = new Array<MapObjects_rectangles>();
+        get_mapObjects_rectangle();
     }
 
     public HashSet<Vector2> collisium (float [] rectangle){
         set.clear();
         temporary_arr[0].set(0,0);
         temporary_arr[1].set(0,0);
-
-        for (i = 0; i < length ; ++i){
-            if (!check_camera(rectangle_objects[i])) continue;
-            temporary.set(map.collisium(rectangle_objects[i], rectangle));
+        for (int i = 0 ;i < mapObjects.size; i++){
+            if (!check_camera(mapObjects.get(i).rectangle)) continue;
+            temporary.set(map.collisium(mapObjects.get(i).rectangle, rectangle));
 
             if (temporary.epsilonEquals(0,0)) continue;
 
-            if( check_direction(i, temporary) ) continue;
+            if( check_direction(temporary, mapObjects.get(i).rectangle) ) continue;
 
             if (set.isEmpty()) {
                 set.add(temporary_arr[0].set(temporary));
+                check_crash(temporary, i);
                 continue;
             }
 
             if (has_collinear(temporary)) continue;
 
-            if (temporary_arr[1].epsilonEquals(0,0)) set.add(temporary_arr[1].set(temporary));
+            if (temporary_arr[1].epsilonEquals(0,0)) {
+                set.add(temporary_arr[1].set(temporary));
+                check_crash(temporary, i);
+            }
             else {
                 set.add(temporary.cpy());
+                check_crash(temporary, i);
                 break;
             }
         }
-        check_crash(temporary, i);
+
         return set;
     }
 
 
 
-    private void get_grounds_rectangle() {
-        j=0;
-        i=0;
-        for (MapObject cell : objects) {
-            map.get_rectangle(cell, rectangle_object);
-            for (i=0 ; i < 8; ++i){
-                rectangle_objects[j][i] = rectangle_object[i];
-            }
-            ++j;
-        }
-    }
 
     public boolean check_camera (float [] a){
         if ( a[0] < camera.position.x && a[2] > camera.position.x ) return true;
@@ -86,20 +80,20 @@ public class Bricks extends MapObject_{
         return false;
     }
 
-    private boolean check_direction(int i, Vector2 vec){
+    private boolean check_direction(Vector2 vec, float [] rectangle){
         float proj_vec_x = Math.signum(vec.x);
         float proj_vec_y = Math.signum(vec.y);
         float x, y;
 
         if (proj_vec_x != 0) {
-            x = rectangle_objects[i][0] + tile_size / 2 + tile_size * proj_vec_x;
-            y = rectangle_objects[i][1] + tile_size / 2;
+            x = rectangle[0] + tile_size / 2 + tile_size * proj_vec_x;
+            y = rectangle[1] + tile_size / 2;
             if (check_input_tile(x, y)) return true;
         }
 
         if (proj_vec_y != 0) {
-            x = rectangle_objects[i][0] + tile_size / 2;
-            y = rectangle_objects[i][1] + tile_size / 2 + tile_size * proj_vec_y;
+            x = rectangle[0] + tile_size / 2;
+            y = rectangle[1] + tile_size / 2 + tile_size * proj_vec_y;
             return check_input_tile(x, y);
         }
 
@@ -107,21 +101,21 @@ public class Bricks extends MapObject_{
     }
 
     private boolean check_input_tile(float x, float y){
-        for (j = 0; j < length ; ++j){
-            if (!check_camera(rectangle_objects[j])) continue;
-            if (x > rectangle_objects[j][0] && x < rectangle_objects[j][2] && y > rectangle_objects[j][1] && y < rectangle_objects[j][7]) {
+        for (MapObjects_rectangles obj_rec : mapObjects){
+            if (!check_camera(obj_rec.rectangle)) continue;
+            if (x > obj_rec.rectangle[0] && x < obj_rec.rectangle[2] && y > obj_rec.rectangle[1] && y < obj_rec.rectangle[7]) {
                 return true;
             }
         }
-        for (j = 0; j < map.grounds.length ; ++j){
-            if (!check_camera(map.grounds.rectangle_objects[j])) continue;
-            if (x > map.grounds.rectangle_objects[j][0] && x < map.grounds.rectangle_objects[j][2] && y > map.grounds.rectangle_objects[j][1] && y < map.grounds.rectangle_objects[j][7]) {
+        for (MapObjects_rectangles obj_rec : map.grounds.mapObjects){
+            if (!check_camera(obj_rec.rectangle)) continue;
+            if (x > obj_rec.rectangle[0] && x < obj_rec.rectangle[2] && y > obj_rec.rectangle[1] && y < obj_rec.rectangle[7]) {
                 return true;
             }
         }
-        for (j = 0; j < map.coins.length ; ++j){
-            if (!check_camera(map.coins.rectangle_objects[j])) continue;
-            if (x > map.coins.rectangle_objects[j][0] && x < map.coins.rectangle_objects[j][2] && y > map.coins.rectangle_objects[j][1] && y < map.coins.rectangle_objects[j][7]) {
+        for (MapObjects_rectangles obj_rec : map.coins.mapObjects){
+            if (!check_camera(obj_rec.rectangle)) continue;
+            if (x > obj_rec.rectangle[0] && x < obj_rec.rectangle[2] && y > obj_rec.rectangle[1] && y < obj_rec.rectangle[7]) {
                 return true;
             }
         }
@@ -130,8 +124,9 @@ public class Bricks extends MapObject_{
 
     void check_crash (Vector2 temp, int k){
         if (temp.x == 0 && temp.y < 0){
+            mapObjects.removeIndex(k);
             TiledMapTileLayer layer = (TiledMapTileLayer) map.tiledMap.getLayers().get("grounds");
-            objects.remove(k-1);
+            //objects.remove(k-1);
 
             //layer.getCell(3,7).setRotation(33);//((int)((RectangleMapObject) objects.get(k)).getRectangle().getX(), (int)((RectangleMapObject) objects.get(k)).getRectangle().getY());
             //map.tiledMap.getLayers().get("grounds").getC
@@ -140,5 +135,7 @@ public class Bricks extends MapObject_{
 
         }
     }
+
+
 
 }

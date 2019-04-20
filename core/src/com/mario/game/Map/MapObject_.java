@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.mario.game.creatures.Mario.Mario;
 
 import java.util.HashSet;
@@ -15,8 +16,8 @@ public abstract class MapObject_ {
     OrthographicCamera camera;
     Mario mario;
 
+    Array <MapObjects_rectangles> mapObjects;
     float[] rectangle_object;
-    float[][] rectangle_objects;
     int length;
     int i;
     int j;
@@ -29,10 +30,10 @@ public abstract class MapObject_ {
         temporary_arr[0].set(0,0);
         temporary_arr[1].set(0,0);
 
-        for (i = 0; i < length ; ++i){
-            if (!check_camera(rectangle_objects[i])) continue;
+        for (int i = 0 ;i < mapObjects.size; i++){
+            if (!check_camera(mapObjects.get(i).rectangle)) continue;
 
-            temporary.set(map.collisium(rectangle_objects[i], rectangle));
+            temporary.set(map.collisium(mapObjects.get(i).rectangle, rectangle));
 
             if (temporary.epsilonEquals(0,0)) continue;
 
@@ -54,16 +55,10 @@ public abstract class MapObject_ {
     }
 
 
-
-    protected void get_rectangles() {
-        j=0;
-        i=0;
+    protected void get_mapObjects_rectangle() {
         for (MapObject cell : objects) {
             map.get_rectangle(cell, rectangle_object);
-            for (i=0 ; i < 8; ++i){
-                rectangle_objects[j][i] = rectangle_object[i];
-            }
-            ++j;
+            mapObjects.add(new MapObjects_rectangles(cell, rectangle_object));
         }
     }
 

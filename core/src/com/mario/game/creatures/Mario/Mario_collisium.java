@@ -58,10 +58,10 @@ import java.util.HashSet;
         mario.shape[4] = mario.position.x -  mario.RATIO + mario.width;
         mario.shape[5] = mario.position.y + 2 * mario.height / 3f;
 
-        mario.shape[6] = mario.position.x + 3 * mario.RATIO + mario.width / 2f;
+        mario.shape[6] = mario.position.x + 1 * mario.RATIO + mario.width / 2f;
         mario.shape[7] = mario.position.y  + mario.height;
 
-        mario.shape[8] = mario.position.x - 3 * mario.RATIO + mario.width / 2f;
+        mario.shape[8] = mario.position.x - 1 * mario.RATIO + mario.width / 2f;
         mario.shape[9] = mario.position.y  + mario.height;
 
         mario.shape[10] = mario.position.x +  mario.RATIO;
