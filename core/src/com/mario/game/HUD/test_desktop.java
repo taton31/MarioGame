@@ -2,7 +2,6 @@ package com.mario.game.HUD;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.assets.loaders.AssetLoader;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -11,16 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.mario.game.creatures.Mario;
-
-import javax.swing.table.TableCellEditor;
+import com.mario.game.creatures.Mario.Mario;
 
 public class test_desktop {
     Stage stage;
@@ -50,7 +44,7 @@ public class test_desktop {
     public test_desktop (Stage sc, Mario mar){
         stage = sc;
         mario = mar;
-        RATIO = mario.RATIO;
+        RATIO = mario.getRATIO();
         table = new Table();
         table.top();
         table.setFillParent(true);
@@ -105,11 +99,11 @@ public class test_desktop {
     }
 
     public void update (){
-        mario.velocity_start = (int) (Float.parseFloat(vel_start.getText()) * RATIO);
-        mario.velocity_jump = (int) (Float.parseFloat(vel_jump.getText()) * RATIO);
-        mario.max_velocity = (int) (Float.parseFloat(max_vel.getText()) * RATIO);
-        mario.acceleration_G = (int) (Float.parseFloat(accel_G.getText()) * RATIO);
-        mario.koff_acc =  (Float.parseFloat(koff_acc.getText()));
+        mario.set_vel_start((int) (Float.parseFloat(vel_start.getText()) * RATIO));
+        mario.set_vel_jump((int) (Float.parseFloat(vel_jump.getText()) * RATIO));
+        mario.set_max_vel((int) (Float.parseFloat(max_vel.getText()) * RATIO));
+        mario.set_acceleration_G((int) (Float.parseFloat(accel_G.getText()) * RATIO));
+        mario.set_koff_acc((Float.parseFloat(koff_acc.getText())));
 
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             mario.press_left();

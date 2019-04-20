@@ -1,4 +1,4 @@
-package com.mario.game.creatures;
+package com.mario.game.creatures.enemy;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.mario.game.Screens.play_game;
+import com.mario.game.creatures.Mario.Mario;
 
 import java.util.HashSet;
 
@@ -133,13 +134,13 @@ public class mushroom {
             return;
         }
         coll_mar.set(playGame.map.collisium(shape, mario.shape));
-        if (!coll_mar.epsilonEquals(0,0) && !mario.marioIsDead) {
+        if (!coll_mar.epsilonEquals(0,0) && !mario.isMarioDead()) {
             if (coll_mar.y > 0) {
                 DIE = true;
                 mario.velocity.y = velocity_jump / 1.6f;
-                if (playGame.game.MUS_ON) mario.stomp.play();
+                if (playGame.game.MUS_ON) mario.getStomp().play();
             } else {
-                mario.mario_dead();
+                mario.setMarioDead();
             }
         }
     }
@@ -153,10 +154,10 @@ public class mushroom {
         shape[3] = position.y;
 
         shape[4] = position.x + width ;
-        shape[5] = position.y + height;
+        shape[5] = position.y + 3 * height / 5f;
 
         shape[6] = position.x;
-        shape[7] = position.y + height;
+        shape[7] = position.y + 3 * height / 5f;
 
         /*shape[0] = position.x ;
         shape[1] = position.y;

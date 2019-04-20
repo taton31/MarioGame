@@ -11,8 +11,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mario.game.HUD.Scene;
 import com.mario.game.Map.Map;
 import com.mario.game.MarioGame;
-import com.mario.game.creatures.Mario;
-import com.mario.game.creatures.mushroom;
+import com.mario.game.creatures.Mario.Mario;
+import com.mario.game.creatures.enemy.mushroom;
 
 public class play_game implements Screen {
 
@@ -37,8 +37,8 @@ public class play_game implements Screen {
 
         batch = new SpriteBatch();
         mario = new Mario(100,250, this);
-        map = new Map(this,  "tile/map1.tmx", camera);
         scene = new Scene(batch, mario, game);
+        map = new Map(this,  "tile/map1.tmx", camera);
     }
 
 
@@ -73,7 +73,7 @@ public class play_game implements Screen {
             map.render();
             batch.setProjectionMatrix(camera.combined);
             batch.begin();
-            batch.draw(mario.mario_texture, mario.position.x, mario.position.y, mario.width, mario.height);
+            batch.draw(mario.getTexture(), mario.position.x, mario.position.y, mario.getWidth(), mario.getHeight());
             for (mushroom mash : map.mush_array){
                 batch.draw(mash.region, mash.position.x, mash.position.y, mash.width, mash.height);
             }

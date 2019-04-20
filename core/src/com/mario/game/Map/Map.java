@@ -1,7 +1,5 @@
 package com.mario.game.Map;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -12,7 +10,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
-import com.mario.game.creatures.mushroom;
+import com.mario.game.creatures.enemy.mushroom;
 import com.mario.game.Screens.play_game;
 
 import java.util.HashSet;
@@ -37,6 +35,7 @@ public class Map implements Disposable {
 
     public Map(play_game PlayGa, String fileName, OrthographicCamera cam) {
         PlayGame = PlayGa;
+        PlayGame.mario.mario_clean();
         tiledMap = new TmxMapLoader().load(fileName);
         tiledMapRenderer = new OrthoCachedTiledMapRenderer(tiledMap, PlayGame.game.ratioY);
         ((OrthoCachedTiledMapRenderer) tiledMapRenderer).setBlending(true);
