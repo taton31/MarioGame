@@ -11,7 +11,7 @@ public class MarioGame extends Game {
 	public BitmapFont font;
 	public static final int WIDTH = 400;
 	public static final int HEIGHT = 208;
-	public boolean MUS_ON = true;
+	public int MUS_ON = 100;
 	public int mario_health;
 	public int number_world;
 	public main_menu_screen menu_screen;

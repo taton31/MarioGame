@@ -32,10 +32,10 @@ import java.util.HashSet;
         get_shape();
         mario.stayOnGround = false;
         mario.bias.clear();
-        mario.bias_ground = mario.playGame.map.grounds.collisium(mario.shape);
-        mario.bias_pipes = mario.playGame.map.pipes.collisium(mario.shape);
-        mario.bias_coins = mario.playGame.map.coins.collisium(mario.shape);
-        mario.bias_bricks = mario.playGame.map.bricks.collisium(mario.shape);
+        mario.bias_ground = mario.playGame.map.grounds.collisium(mario.shape, false);
+        mario.bias_pipes = mario.playGame.map.pipes.collisium(mario.shape, false);
+        mario.bias_coins = mario.playGame.map.coins.collisium(mario.shape, false);
+        mario.bias_bricks = mario.playGame.map.bricks.collisium(mario.shape, false);
         check_sets();
         can_jump(mario.bias);
         for (Vector2 vec : mario.bias) {
@@ -105,6 +105,8 @@ import java.util.HashSet;
     private void checkMarioInvulnerable(float delta){
         if (!mario.marioIsInvulnerable) return;
         mario.TimerInvulnerable += delta;
-        if (mario.TimerInvulnerable > 3.5f) mario.marioIsInvulnerable = false;
+        if (mario.TimerInvulnerable > 3.5f) {
+            mario.marioIsInvulnerable = false;
+        }
     }
 }

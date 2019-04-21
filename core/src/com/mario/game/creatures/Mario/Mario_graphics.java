@@ -37,6 +37,7 @@ import com.badlogic.gdx.utils.Array;
 
         mario.texture = new Texture("big_mario/big_mario.png");
 
+        mario.marioSit = new TextureRegion(mario.texture, 96, 0, 16, 32);
         mario.bigMarioJump = new TextureRegion(mario.texture, 80, 0, 16, 32);
         mario.bigMarioStand = new TextureRegion(mario.texture, 0, 0, 16, 32);
 
@@ -53,13 +54,26 @@ import com.badlogic.gdx.utils.Array;
         mario.growMario = new Animation<TextureRegion>(0.2f, frames);
 
         mario.marioEmpty = new TextureRegion(new Texture("mario/empty.png"));
+
+        frames.add(mario.marioStand);
+        frames.add(mario.marioEmpty);
+        frames.add(mario.bigMarioStand);
+        frames.add(mario.marioEmpty);
+
+        mario.growMarioDown = new Animation<TextureRegion>(0.1f, frames);
+
+        frames.clear();
     }
 
     private Mario.State getState(){
         if(mario.marioIsDead)
             return Mario.State.DEAD;
-        else if(mario.runGrowAnimation)
+        else if(mario.runGrowAnimation )
             return Mario.State.GROWING;
+        else if (mario.isMarioInvulnerable() && mario.TimerInvulnerable < 2f)
+            return Mario.State.STANDING;
+        else if (mario.press_button_down)
+            return Mario.State.SITTING;
         else if(mario.currentState == Mario.State.JUMPING && !mario.stayOnGround)
             return Mario.State.JUMPING;
         else if(mario.velocity.y < 0)
@@ -91,6 +105,9 @@ import com.badlogic.gdx.utils.Array;
             case RUNNING:
                 if (mario.stayOnGround && mario.velocity.x * mario.acceleration.x < 0 && mario.press_button) region = mario.marioStop;
                 else region = (mario.marioIsBig ? mario.bigMarioRun.getKeyFrame(mario.stateTimer, true) : mario.marioRun.getKeyFrame(mario.stateTimer, true));
+                break;
+            case SITTING:
+                region = mario.marioIsBig ? mario.marioSit : mario.marioStand;
                 break;
             case FALLING:
             case STANDING:

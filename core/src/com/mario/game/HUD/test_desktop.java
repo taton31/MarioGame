@@ -117,6 +117,9 @@ public class test_desktop {
             mario.press_up();
         } else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             mario.press_down();
+        } else {
+            mario.unpress_button_down();
+            mario.unpress_button_up();
         }
     }
 }

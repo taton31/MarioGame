@@ -31,13 +31,13 @@ public abstract class MapObject_ {
         camera = cam;
     }
 
-    public HashSet<Vector2> collisium (float [] rectangle){
+    public HashSet<Vector2> collisium (float [] rectangle , boolean check_all_world){
         set.clear();
         temporary_arr[0].set(0,0);
         temporary_arr[1].set(0,0);
 
         for (int i = 0 ;i < mapObjects.size; i++){
-            if (!check_camera(mapObjects.get(i).rectangle)) continue;
+            if (!check_all_world &&  !check_camera(mapObjects.get(i).rectangle)) continue;
 
             temporary.set(map.collisium(mapObjects.get(i).rectangle, rectangle));
 

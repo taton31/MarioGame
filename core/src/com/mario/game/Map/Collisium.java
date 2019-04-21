@@ -15,7 +15,7 @@ import java.util.HashSet;
 public abstract class Collisium {
 
     play_game PlayGame;
-    TiledMap tiledMap;
+    public TiledMap tiledMap;
     protected TiledMapRenderer tiledMapRenderer;
     TiledMapTileLayer layer;
 
@@ -26,7 +26,7 @@ public abstract class Collisium {
     private Vector2 proj_first_point1, proj_first_point2, proj_second_point1, proj_second_point2;
     private Vector2 temporary_point, proj_firsec_point1, proj_firsec_point2;
     private Vector2 [] vec;
-    private float RATIO;
+    protected float RATIO;
 
     Collisium (float rat){
         RATIO = rat;

@@ -34,7 +34,10 @@ package com.mario.game.creatures.Mario;
     }
 
     void press_down (){
-        mario.press_button = false;
+        mario.press_button_down = true;
+        mario.unpress_button();
+        mario.unpress_button_up();
+
     }
 
     void press_fire (){
@@ -47,5 +50,9 @@ package com.mario.game.creatures.Mario;
 
     void unpress_button_up (){
         mario.press_button_up = false;
+    }
+
+    void unpress_button_down (){
+        mario.press_button_down = false;
     }
 }

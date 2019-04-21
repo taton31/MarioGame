@@ -17,5 +17,4 @@ import com.badlogic.gdx.Gdx;
          mario.powerup_spawn = Gdx.audio.newSound(Gdx.files.internal("music/sounds/powerup_spawn.wav"));
          mario.breakblock = Gdx.audio.newSound(Gdx.files.internal("music/sounds/breakblock.wav"));
     }
-
 }

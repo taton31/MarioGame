@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.mario.game.Screens.play_game;
@@ -21,11 +24,13 @@ public class Goomba {
     private Vector2 acceleration;
     private Mario mario;
     private Vector2 coll_mar;
+    private Vector2 temporary;
 
     private  int velocity_jump;
     private  int max_velocity;
     private boolean running_right;
     public boolean DIE;
+    public boolean stay;
     public float die_time;
     public final int width;
     public int height;
@@ -50,10 +55,14 @@ public class Goomba {
         max_velocity = (int) (30 * RATIO);
         int acceleration_G = (int) (1000 * RATIO);
 
+        stay = true;
+
+        temporary = new Vector2();
         coll_mar = new Vector2();
         bias = new HashSet<Vector2>();
         shape = new float[8];
         doAnimation();
+        region = mushDie;
 
         width = (int) (16 * RATIO);
         height = (int) (16 * RATIO);
@@ -72,6 +81,7 @@ public class Goomba {
     }
 
     private void update_velocity (float delta){
+        if (stay) return;
         if (DIE){
             if (mushDie.isFlipY()){
                 velocity.y += acceleration.y * delta;
@@ -96,10 +106,6 @@ public class Goomba {
         position.x += velocity.x * delta;
         position.y += velocity.y * delta;
 
-        if (position.x + width < mario.getPlayGame().camera.position.x - Gdx.app.getGraphics().getWidth() / 2f) {
-            DIE = true;
-        }
-
         if (position.y - 16 < 0) DIE = true;
     }
 
@@ -123,11 +129,19 @@ public class Goomba {
     private void collisium(){
         if (DIE) return;
         get_shape();
+        for (int k = 0; k < playGame.map.goombas_array.size; ++k) {
+            if (playGame.map.goombas_array.get(k).position.x != position.x) {
+                temporary.set(playGame.map.collisium(playGame.map.goombas_array.get(k).shape, shape));
+                if (temporary.epsilonEquals(0, 0)) continue;
+                playGame.map.goombas_array.get(k).running_right = !playGame.map.goombas_array.get(k).running_right;
+                running_right = !running_right;
+            }
+        }
         bias.clear();
-        bias_ground = playGame.map.grounds.collisium(shape);
-        bias_bricks = playGame.map.bricks.collisium(shape);
-        bias_pipes = playGame.map.pipes.collisium(shape);
-        bias_coins = playGame.map.coins.collisium(shape);
+        bias_ground = playGame.map.grounds.collisium(shape, true);
+        bias_bricks = playGame.map.bricks.collisium(shape, true);
+        bias_pipes = playGame.map.pipes.collisium(shape, true);
+        bias_coins = playGame.map.coins.collisium(shape, true);
         check_sets();
         check_revers();
 
@@ -153,7 +167,7 @@ public class Goomba {
             if (coll_mar.y > 0 && mario.getVelocityY() < 0){
                 DIE = true;
                 mario.velocity.y = velocity_jump / 1.6f;
-                if (playGame.game.MUS_ON) mario.getStomp().play();
+                mario.getStomp().play(mario.getPlayGame().game.MUS_ON / 100f);
             } else {
                 if (mario.isMarioInvulnerable()) return;
                 if (mario.isMarioBig()){
@@ -229,4 +243,6 @@ public class Goomba {
             }
         }
     }
+
+
 }

@@ -29,13 +29,13 @@ public class Coins extends MapObject_ {
         get_mapObjects_rectangle();
     }
 
-    public HashSet<Vector2> collisium (float [] rectangle){
+    public HashSet<Vector2> collisium (float [] rectangle, boolean check_all_world){
         set.clear();
         temporary_arr[0].set(0,0);
         temporary_arr[1].set(0,0);
 
         for (int i = 0 ;i < mapObjects.size; i++){
-            if (!check_camera(mapObjects.get(i).rectangle)) continue;
+            if (!check_all_world && !check_camera(mapObjects.get(i).rectangle)) continue;
             temporary.set(map.collisium(mapObjects.get(i).rectangle, rectangle));
 
             if (temporary.epsilonEquals(0,0)) continue;
@@ -134,22 +134,7 @@ public class Coins extends MapObject_ {
                     goomba.velocity.set(Math.signum(goomba.random.nextInt(1000) - 500) * (goomba.random.nextInt(150) + 150), 650);
                 }
             }
-
-            if (mario.isMarioBig()){
                 mario.getCoin().play();
-                //map.delete_tile((int) (mapObjects.get(k).rectangle[0] / tile_size), (int) (mapObjects.get(k).rectangle[1] / tile_size));
-                //mapObjects.removeIndex(k);
-
-            } else {
-                mario.getBump().play();
-                //map.bump_tile((int) (mapObjects.get(k).rectangle[0] / tile_size), (int) (mapObjects.get(k).rectangle[1] / tile_size));
-            }
-
-            //objects.remove(k-1);
-
-            //layer.getCell(3,7).setRotation(33);//((int)((RectangleMapObject) objects.get(k)).getRectangle().getX(), (int)((RectangleMapObject) objects.get(k)).getRectangle().getY());
-            //map.tiledMap.getLayers().get("grounds").getC
-
         }
     }
 

@@ -28,7 +28,7 @@ public class Mario {
      float koff_acc;
 
      float stateTimer;
-     float TimerInvulnerable;
+     public float TimerInvulnerable;
      boolean runningRight;
      boolean marioIsBig;
      boolean runGrowAnimation;
@@ -52,8 +52,9 @@ public class Mario {
 
      boolean press_button = false;
      boolean press_button_up = false;
+     boolean press_button_down = false;
 
-     enum State {FALLING, JUMPING, STANDING, RUNNING, GROWING, DEAD}
+     enum State {FALLING, JUMPING, STANDING, RUNNING, GROWING, DEAD, SITTING}
 
      State currentState;
      State previousState;
@@ -65,10 +66,12 @@ public class Mario {
      TextureRegion marioDead;
      TextureRegion marioStop;
      TextureRegion marioEmpty;
+     TextureRegion marioSit;
      TextureRegion bigMarioStand;
      TextureRegion bigMarioJump;
      Animation<TextureRegion> bigMarioRun;
      Animation<TextureRegion> growMario;
+     Animation<TextureRegion> growMarioDown;
 
      Texture texture;
 
@@ -87,6 +90,8 @@ public class Mario {
         mario_HUD = new Mario_HUD(this);
         mario_music = new Mario_music(this);
         setMarioSize(true);
+
+
     }
 
 
@@ -140,10 +145,11 @@ public class Mario {
         marioIsBig = a;
         height = a ? (int) (30 * RATIO) : (int) (16 * RATIO);
         if (!a) setMarioInvulnerable();
-        (a ? powerup : powerdown).play();
+        (a ? powerup : powerdown).play(getPlayGame().game.MUS_ON / 100f);
     }
 
     public void press_right(){
+        if (press_button_down) return;
         mario_HUD.press_right();
     }
 
@@ -152,19 +158,27 @@ public class Mario {
     }
 
     public void press_left(){
+        if (press_button_down) return;
         mario_HUD.press_left();
     }
 
     public void press_up(){
+        if (press_button_down) return;
         mario_HUD.press_up();
     }
 
+
     public void unpress_button_up(){
         mario_HUD.unpress_button_up();
+
+    }
+    public void unpress_button_down(){
+        mario_HUD.unpress_button_down();
     }
 
     public void press_down(){
         mario_HUD.press_down();
+
     }
 
     public void press_fire(){

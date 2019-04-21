@@ -33,20 +33,17 @@ public class Settings implements Screen {
         game.font.getData().setScale(2f);
         textButtonStyle.font = game.font;
 
-        music = new TextButton(game.MUS_ON ? "MUSIC ON" : "MUSIC OFF", textButtonStyle);
+        music = new TextButton(String.format("MUSIC %d", game.MUS_ON), textButtonStyle);
         exit = new TextButton("<-", textButtonStyle);
 
 
         music.addListener(new ClickListener() {
                               @Override
                               public void clicked(InputEvent event, float x, float y) {
-                                  if (game.MUS_ON) {
-                                      game.MUS_ON = false;
-                                      music.setText("MUSIC OFF");
-                                  } else {
-                                      game.MUS_ON = true;
-                                      music.setText("MUSIC ON");
-                                  }
+                                  game.MUS_ON = (game.MUS_ON + 10) % 110;
+                                  music.setText(String.format("MUSIC %d", game.MUS_ON));
+
+                                  game.gameMusic.setVolume(game.MUS_ON / 100f);
                               }
                           });
 
@@ -108,4 +105,6 @@ public class Settings implements Screen {
         stage.dispose();
         //game.dispose();
     }
+
+
 }

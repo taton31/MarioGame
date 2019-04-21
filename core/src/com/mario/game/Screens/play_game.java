@@ -39,6 +39,9 @@ public class play_game implements Screen {
         mario = new Mario(100,250, this);
         scene = new Scene(batch, mario, game);
         map = new Map(this,  "tile/map1.tmx", camera);
+
+        //Goomba.create_Goombas(map.goombas_array, this, mario);
+
     }
 
 
@@ -74,9 +77,11 @@ public class play_game implements Screen {
             batch.setProjectionMatrix(camera.combined);
             batch.begin();
             batch.draw(mario.getTexture(), mario.position.x, mario.position.y, mario.getWidth(), mario.getHeight());
-            for (Goomba mash : map.mush_array){
+
+            for (Goomba mash : map.goombas_array){
                 batch.draw(mash.region, mash.position.x, mash.position.y, mash.width, mash.height);
             }
+
             batch.end();
 
             batch.setProjectionMatrix(scene.stage.getCamera().combined);

@@ -23,6 +23,7 @@ class Mario_move{
             mario_dead_update(delta);
             return;
         }
+        if (mario.isMarioInvulnerable() && mario.TimerInvulnerable < 2f) return;
 
         update_velocity(delta);
         camera_setPosition(delta);
