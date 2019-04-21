@@ -37,7 +37,7 @@ public class Map extends Collisium implements Disposable  {
         pipes = new Pipes(this, cam, PlayGame.mario);
         coins = new Coins(this, cam, PlayGame.mario);
         mush_array = new Array<Goomba>();
-        mush_array.add(new Goomba(10*16*PlayGame.game.ratioY, 5*16*PlayGame.game.ratioY, PlayGame, PlayGame.mario));
+        mush_array.add(new Goomba(4*16*PlayGame.game.ratioY, 7*16*PlayGame.game.ratioY, PlayGame, PlayGame.mario));
         mush_array.add(new Goomba(10*16*PlayGame.game.ratioY, 3*16*PlayGame.game.ratioY, PlayGame, PlayGame.mario));
 
     }
@@ -60,5 +60,7 @@ public class Map extends Collisium implements Disposable  {
         tiledMap.dispose();
     }
 
-
+    public Array<Goomba> getGoomdas(){
+        return mush_array;
+    }
 }

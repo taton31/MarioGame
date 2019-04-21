@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.mario.game.creatures.Mario.Mario;
+import com.mario.game.creatures.enemy.Goomba;
 
 import java.util.HashSet;
 
@@ -43,6 +44,7 @@ public class Coins extends MapObject_ {
 
             if (set.isEmpty()) {
                 set.add(temporary_arr[0].set(temporary));
+                check_crash(temporary, i);
                 continue;
             }
 
@@ -51,6 +53,7 @@ public class Coins extends MapObject_ {
             if (temporary_arr[1].epsilonEquals(0,0)) set.add(temporary_arr[1].set(temporary));
             else {
                 set.add(temporary.cpy());
+                check_crash(temporary, i);
                 break;
             }
         }
@@ -119,5 +122,35 @@ public class Coins extends MapObject_ {
         return false;
     }
 
+    void check_crash (Vector2 temp, int k){
+        if (temp.x == 0 && temp.y < 0){
+
+            for (Goomba goomba : map.getGoomdas()){
+                if (mapObjects.get(k).rectangle[0] < goomba.position.x + goomba.width / 2f && mapObjects.get(k).rectangle[2] > goomba.position.x + goomba.width / 2f &&
+                        mapObjects.get(k).rectangle[7] < goomba.position.y + goomba.height / 2f && mapObjects.get(k).rectangle[7] + tile_size > goomba.position.y + goomba.height / 2f){
+                    goomba.mushDie.flip(false, true);
+                    System.out.println(goomba.mushDie.isFlipY());
+                    goomba.DIE = true;
+                    goomba.velocity.set(Math.signum(goomba.random.nextInt(1000) - 500) * (goomba.random.nextInt(150) + 150), 650);
+                }
+            }
+
+            if (mario.isMarioBig()){
+                mario.getCoin().play();
+                //map.delete_tile((int) (mapObjects.get(k).rectangle[0] / tile_size), (int) (mapObjects.get(k).rectangle[1] / tile_size));
+                //mapObjects.removeIndex(k);
+
+            } else {
+                mario.getBump().play();
+                //map.bump_tile((int) (mapObjects.get(k).rectangle[0] / tile_size), (int) (mapObjects.get(k).rectangle[1] / tile_size));
+            }
+
+            //objects.remove(k-1);
+
+            //layer.getCell(3,7).setRotation(33);//((int)((RectangleMapObject) objects.get(k)).getRectangle().getX(), (int)((RectangleMapObject) objects.get(k)).getRectangle().getY());
+            //map.tiledMap.getLayers().get("grounds").getC
+
+        }
+    }
 
 }

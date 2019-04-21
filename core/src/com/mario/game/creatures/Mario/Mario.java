@@ -28,12 +28,14 @@ public class Mario {
      float koff_acc;
 
      float stateTimer;
+     float TimerInvulnerable;
      boolean runningRight;
      boolean marioIsBig;
      boolean runGrowAnimation;
      boolean timeToDefineBigMario;
      boolean timeToRedefineMario;
      boolean marioIsDead;
+     boolean marioIsInvulnerable;
 
      Sound stomp;
      Sound mariodie;
@@ -62,6 +64,7 @@ public class Mario {
      TextureRegion marioJump;
      TextureRegion marioDead;
      TextureRegion marioStop;
+     TextureRegion marioEmpty;
      TextureRegion bigMarioStand;
      TextureRegion bigMarioJump;
      Animation<TextureRegion> bigMarioRun;
@@ -83,7 +86,7 @@ public class Mario {
         mario_graphics = new Mario_graphics(this);
         mario_HUD = new Mario_HUD(this);
         mario_music = new Mario_music(this);
-        //setMarioSize(true);
+        setMarioSize(true);
     }
 
 
@@ -97,6 +100,8 @@ public class Mario {
     public float getX(){ return position.x; }
 
     public float getY(){ return position.y; }
+
+    public float getVelocityY(){ return velocity.y; }
 
     public int getWidth(){ return width; }
 
@@ -134,7 +139,7 @@ public class Mario {
     public void setMarioSize(boolean a){
         marioIsBig = a;
         height = a ? (int) (30 * RATIO) : (int) (16 * RATIO);
-
+        if (!a) setMarioInvulnerable();
         (a ? powerup : powerdown).play();
     }
 
@@ -188,5 +193,18 @@ public class Mario {
 
     public void mario_clean(){
         mario_move.mario_clean();
+    }
+
+    public void setMarioInvulnerable(){
+        TimerInvulnerable = 0;
+        marioIsInvulnerable = true;
+    }
+
+    public boolean isMarioInvulnerable(){
+        return marioIsInvulnerable;
+    }
+
+    public play_game getPlayGame(){
+        return playGame;
     }
 }

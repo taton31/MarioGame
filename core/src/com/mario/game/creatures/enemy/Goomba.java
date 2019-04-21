@@ -1,5 +1,6 @@
 package com.mario.game.creatures.enemy;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,13 +10,14 @@ import com.mario.game.Screens.play_game;
 import com.mario.game.creatures.Mario.Mario;
 
 import java.util.HashSet;
+import java.util.Random;
 
 public class Goomba {
 
     private final play_game playGame;
 
     public Vector2 position;
-    private Vector2 velocity;
+    public Vector2 velocity;
     private Vector2 acceleration;
     private Mario mario;
     private Vector2 coll_mar;
@@ -23,20 +25,22 @@ public class Goomba {
     private  int velocity_jump;
     private  int max_velocity;
     private boolean running_right;
-    private boolean DIE;
+    public boolean DIE;
     public float die_time;
     public final int width;
     public int height;
     private HashSet<Vector2> bias, bias_ground, bias_bricks, bias_coins, bias_pipes;
     private float[] shape;
     private float timer;
+    public Random random;
 
     private Animation<TextureRegion> mushRun;
-    private TextureRegion mushDie;
+    public TextureRegion mushDie;
     public TextureRegion region;
 
 
     public Goomba(float x, float y, final play_game a, Mario mar){
+        random = new Random();
         playGame = a;
         mario = mar;
         float RATIO = playGame.game.ratioY;
@@ -69,6 +73,14 @@ public class Goomba {
 
     private void update_velocity (float delta){
         if (DIE){
+            if (mushDie.isFlipY()){
+                velocity.y += acceleration.y * delta;
+                position.x += velocity.x * delta;
+                position.y += velocity.y * delta;
+                region = mushRun.getKeyFrame(0);
+                if (!region.isFlipY()) region.flip(false, true);
+                return;
+            }
             region = mushDie;
             return;
         }
@@ -84,7 +96,11 @@ public class Goomba {
         position.x += velocity.x * delta;
         position.y += velocity.y * delta;
 
+        if (position.x + width < mario.getPlayGame().camera.position.x - Gdx.app.getGraphics().getWidth() / 2f) {
+            DIE = true;
+        }
 
+        if (position.y - 16 < 0) DIE = true;
     }
 
 
@@ -105,6 +121,7 @@ public class Goomba {
 
 
     private void collisium(){
+        if (DIE) return;
         get_shape();
         bias.clear();
         bias_ground = playGame.map.grounds.collisium(shape);
@@ -130,17 +147,20 @@ public class Goomba {
             die_time += delta;
             return;
         }
+
         coll_mar.set(playGame.map.collisium(shape, mario.shape));
         if (!coll_mar.epsilonEquals(0,0) && !mario.isMarioDead()) {
-            if (coll_mar.y > 0) {
+            if (coll_mar.y > 0 && mario.getVelocityY() < 0){
                 DIE = true;
                 mario.velocity.y = velocity_jump / 1.6f;
                 if (playGame.game.MUS_ON) mario.getStomp().play();
             } else {
+                if (mario.isMarioInvulnerable()) return;
                 if (mario.isMarioBig()){
                     mario.setMarioSize(false);
+                } else {
+                    mario.setMarioDead();
                 }
-                mario.setMarioDead();
             }
         }
     }

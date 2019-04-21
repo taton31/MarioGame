@@ -4,6 +4,7 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -260,14 +261,18 @@ public abstract class Collisium {
     }
 
     void delete_tile (int a, int b){
-        TiledMapTileLayer layer = (TiledMapTileLayer) tiledMap.getLayers().get("grounds");
         layer.getCell(a, b).setTile(null);
         ((OrthoCachedTiledMapRenderer) tiledMapRenderer).invalidateCache();
     }
 
     void bump_tile (int a, int b){
-        TiledMapTileLayer layer = (TiledMapTileLayer) tiledMap.getLayers().get("grounds");
-        layer.getCell(a, b).getTile();
+        layer.getCell(a, b).getTile().setOffsetY(55);
+        layer.getCell(a, b).getTile().setOffsetY(0);
+        //layer.getCell(a,b).setTile(layer.getCell(a, b).getTile().getTextureRegion())
+        //tile.setOffsetY(77);
+        //tile.setOffsetY(-2);
+        //layer.getCell(a, b).setTile(tile);
+        //layer.getCell(a, b).getTile().setOffsetY(j++);
         ((OrthoCachedTiledMapRenderer) tiledMapRenderer).invalidateCache();
     }
 }

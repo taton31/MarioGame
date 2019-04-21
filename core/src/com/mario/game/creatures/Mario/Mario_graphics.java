@@ -51,6 +51,8 @@ import com.badlogic.gdx.utils.Array;
         frames.add(new TextureRegion(mario.texture, 240, 0, 16, 32));
         frames.add(new TextureRegion(mario.texture, 0, 0, 16, 32));
         mario.growMario = new Animation<TextureRegion>(0.2f, frames);
+
+        mario.marioEmpty = new TextureRegion(new Texture("mario/empty.png"));
     }
 
     private Mario.State getState(){
@@ -109,6 +111,7 @@ import com.badlogic.gdx.utils.Array;
 
         mario.stateTimer = mario.currentState == mario.previousState ? mario.stateTimer + dt : 0;
         mario.previousState = mario.currentState;
+        if (mario.isMarioInvulnerable() && mario.stateTimer % 0.2f > 0.1) region = mario.marioEmpty;
         mario.mario_texture = region;
 
     }

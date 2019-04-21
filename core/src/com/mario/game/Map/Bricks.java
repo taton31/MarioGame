@@ -9,8 +9,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.mario.game.creatures.Mario.Mario;
+import com.mario.game.creatures.enemy.Goomba;
 
 import java.util.HashSet;
+import java.util.Random;
 
 public class Bricks extends MapObject_{
 // элементы брикс могут быть только кубиками 1 на 1!!!!!!!!!!!!!!!!!!!!!!
@@ -39,6 +41,7 @@ public class Bricks extends MapObject_{
         set.clear();
         temporary_arr[0].set(0,0);
         temporary_arr[1].set(0,0);
+        //do_crash(mapObjects);
         for (int i = 0 ;i < mapObjects.size; i++){
             if (!check_camera(mapObjects.get(i).rectangle)) continue;
             temporary.set(map.collisium(mapObjects.get(i).rectangle, rectangle));
@@ -121,16 +124,28 @@ public class Bricks extends MapObject_{
         }
         return false;
     }
-
+//отсрочим разрушение на кадр, что бы успели проверить, стоит ли на блоке гумба
     void check_crash (Vector2 temp, int k){
         if (temp.x == 0 && temp.y < 0){
+
+            for (Goomba goomba : map.getGoomdas()){
+                if (mapObjects.get(k).rectangle[0] < goomba.position.x + goomba.width / 2f && mapObjects.get(k).rectangle[2] > goomba.position.x + goomba.width / 2f &&
+                        mapObjects.get(k).rectangle[7] < goomba.position.y + goomba.height / 2f && mapObjects.get(k).rectangle[7] + tile_size > goomba.position.y + goomba.height / 2f){
+                    goomba.mushDie.flip(false, true);
+                    System.out.println(goomba.mushDie.isFlipY());
+                    goomba.DIE = true;
+                    goomba.velocity.set(Math.signum(goomba.random.nextInt(1000) - 500) * (goomba.random.nextInt(150) + 150), 650);
+                }
+            }
+
             if (mario.isMarioBig()){
                 mario.getBreakblock().play();
                 map.delete_tile((int) (mapObjects.get(k).rectangle[0] / tile_size), (int) (mapObjects.get(k).rectangle[1] / tile_size));
                 mapObjects.removeIndex(k);
+
             } else {
                 mario.getBump().play();
-                map.bump_tile((int) (mapObjects.get(k).rectangle[0] / tile_size), (int) (mapObjects.get(k).rectangle[1] / tile_size));
+                //map.bump_tile((int) (mapObjects.get(k).rectangle[0] / tile_size), (int) (mapObjects.get(k).rectangle[1] / tile_size));
             }
 
             //objects.remove(k-1);

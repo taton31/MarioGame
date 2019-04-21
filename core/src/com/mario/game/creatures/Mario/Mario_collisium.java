@@ -16,6 +16,7 @@ import java.util.HashSet;
 
         mario.bias = new HashSet<Vector2>();
         mario.shape = new float[12];
+        mario.marioIsInvulnerable = false;
 
         get_shape();
 
@@ -24,6 +25,7 @@ import java.util.HashSet;
     void update (float delta){
         if (mario.isMarioDead()) return;
         collisium();
+        checkMarioInvulnerable(delta);
     }
 
     private void collisium(){
@@ -98,5 +100,11 @@ import java.util.HashSet;
             }
             mario.bias.add(vec);
         }
+    }
+
+    private void checkMarioInvulnerable(float delta){
+        if (!mario.marioIsInvulnerable) return;
+        mario.TimerInvulnerable += delta;
+        if (mario.TimerInvulnerable > 3.5f) mario.marioIsInvulnerable = false;
     }
 }
