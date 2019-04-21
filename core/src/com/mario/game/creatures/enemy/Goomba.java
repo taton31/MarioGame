@@ -31,6 +31,7 @@ public class Goomba {
     private boolean running_right;
     public boolean DIE;
     public boolean stay;
+    public boolean was_coll_withMar;
     public float die_time;
     public final int width;
     public int height;
@@ -56,6 +57,7 @@ public class Goomba {
         int acceleration_G = (int) (1000 * RATIO);
 
         stay = true;
+        was_coll_withMar = false;
 
         temporary = new Vector2();
         coll_mar = new Vector2();
@@ -163,12 +165,13 @@ public class Goomba {
         }
 
         coll_mar.set(playGame.map.collisium(shape, mario.shape));
-        if (!coll_mar.epsilonEquals(0,0) && !mario.isMarioDead()) {
+        if (!coll_mar.epsilonEquals(0,0) && !mario.isMarioDead() && !was_coll_withMar) {
             if (coll_mar.y > 0 && mario.getVelocityY() < 0){
                 DIE = true;
                 mario.velocity.y = velocity_jump / 1.6f;
                 mario.getStomp().play(mario.getPlayGame().game.MUS_ON / 100f);
             } else {
+                was_coll_withMar = true;
                 if (mario.isMarioInvulnerable()) return;
                 if (mario.isMarioBig()){
                     mario.setMarioSize(false);
@@ -176,7 +179,7 @@ public class Goomba {
                     mario.setMarioDead();
                 }
             }
-        }
+        } else was_coll_withMar = false;
     }
 
     private void get_shape(){
