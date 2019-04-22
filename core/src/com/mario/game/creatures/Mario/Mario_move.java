@@ -10,7 +10,7 @@ class Mario_move{
 
     Mario_move(Mario mar, float x, float y){
         mario = mar;
-        mario.position = new Vector2(x, y);
+        mario.position = new Vector2(0, 0);
         mario.velocity = new Vector2(0, 0);
         mario.acceleration = new Vector2(0, -mario.acceleration_G);
 

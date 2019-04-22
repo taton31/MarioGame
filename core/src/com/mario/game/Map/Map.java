@@ -31,7 +31,7 @@ public class Map extends Collisium implements Disposable  {
     public Map(play_game PlayGa, String fileName, OrthographicCamera cam) {
         super(PlayGa.game.ratioY);
         PlayGame = PlayGa;
-        PlayGame.mario.mario_clean();
+//        PlayGame.mario.mario_clean();
         tiledMap = new TmxMapLoader().load(fileName);
         tiledMapRenderer = new OrthoCachedTiledMapRenderer(tiledMap, PlayGame.game.ratioY);
         ((OrthoCachedTiledMapRenderer) tiledMapRenderer).setBlending(true);

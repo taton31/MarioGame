@@ -6,6 +6,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mario.game.HUD.Scene;
@@ -28,7 +31,7 @@ public class play_game implements Screen {
     public Scene scene;
 
 
-    play_game (final MarioGame gam){
+    play_game (final MarioGame gam, String name_LVL){
         game=gam;
 
         camera = new OrthographicCamera();
@@ -36,9 +39,7 @@ public class play_game implements Screen {
         camera.setToOrtho(false, MarioGame.WIDTH * game.ratioX, MarioGame.HEIGHT * game.ratioY);
 
         batch = new SpriteBatch();
-        mario = new Mario(100,250, this);
-        scene = new Scene(batch, mario, game);
-        map = new Map(this,  "tile/map1.tmx", camera);
+        create_world(name_LVL);
 
         //Goomba.create_Goombas(map.goombas_array, this, mario);
 
@@ -120,5 +121,18 @@ public class play_game implements Screen {
         mario.update(delta);
         map.update(delta);
         //camera.update();
+    }
+
+    public void create_world(String name_LVL){
+        if (scene != null && map != null && mario != null) {
+            scene.dispose();
+            map.dispose();
+            mario.dispose();
+        }
+        mario = new Mario(100,250, this);
+        scene = new Scene(batch, mario, game);
+        map = new Map(this,  name_LVL, camera);
+        MapObjects objects = map.tiledMap.getLayers().get("mario").getObjects();
+        mario.setXY((int)(((RectangleMapObject) objects.get(0)).getRectangle().getX() * game.ratioY), (int)(((RectangleMapObject) objects.get(0)).getRectangle().getY() * game.ratioY));
     }
 }

@@ -165,8 +165,9 @@ public class Goomba {
         }
 
         coll_mar.set(playGame.map.collisium(shape, mario.shape));
-        if (!coll_mar.epsilonEquals(0,0) && !mario.isMarioDead() && !was_coll_withMar) {
+        if (!coll_mar.epsilonEquals(0,0) && !mario.isMarioDead()) {
             if (coll_mar.y > 0 && mario.getVelocityY() < 0){
+                if (was_coll_withMar) return;
                 DIE = true;
                 mario.velocity.y = velocity_jump / 1.6f;
                 mario.getStomp().play(mario.getPlayGame().game.MUS_ON / 100f);

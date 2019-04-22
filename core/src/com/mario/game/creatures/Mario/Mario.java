@@ -5,11 +5,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Disposable;
 import com.mario.game.Screens.play_game;
 
 import java.util.HashSet;
 
-public class Mario {
+public class Mario implements Disposable {
      play_game playGame;
 
      float RATIO;
@@ -54,7 +55,9 @@ public class Mario {
      boolean press_button_up = false;
      boolean press_button_down = false;
 
-     enum State {FALLING, JUMPING, STANDING, RUNNING, GROWING, DEAD, SITTING}
+
+
+    enum State {FALLING, JUMPING, STANDING, RUNNING, GROWING, DEAD, SITTING}
 
      State currentState;
      State previousState;
@@ -101,6 +104,21 @@ public class Mario {
         mario_graphics.update(delta);
     }
 
+    @Override
+    public void dispose() {
+
+        stomp.dispose();
+        mariodie.dispose();
+        bump.dispose();
+        breakblock.dispose();
+        coin.dispose();
+        powerdown.dispose();
+        powerup.dispose();
+        powerup_spawn.dispose();
+
+        texture.dispose();
+
+    }
 
     public float getX(){ return position.x; }
 
@@ -220,5 +238,13 @@ public class Mario {
 
     public play_game getPlayGame(){
         return playGame;
+    }
+
+    public boolean getPressButtonDown(){
+        return press_button_down;
+    }
+
+    public void setXY(int x, int y){
+        position.set(x,y);
     }
 }
