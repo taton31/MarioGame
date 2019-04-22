@@ -37,7 +37,7 @@ public class main_menu_screen implements Screen {
         play.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                game.setScreen(new play_game(game, "tile/map1.tmx"));
+                game.setScreen(new play_game(game, "tile/map11.tmx"));
                 dispose();
             }
         });

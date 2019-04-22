@@ -31,11 +31,11 @@ public class Map extends Collisium implements Disposable  {
     public Map(play_game PlayGa, String fileName, OrthographicCamera cam) {
         super(PlayGa.game.ratioY);
         PlayGame = PlayGa;
-//        PlayGame.mario.mario_clean();
         tiledMap = new TmxMapLoader().load(fileName);
         tiledMapRenderer = new OrthoCachedTiledMapRenderer(tiledMap, PlayGame.game.ratioY);
         ((OrthoCachedTiledMapRenderer) tiledMapRenderer).setBlending(true);
         layer = (TiledMapTileLayer) tiledMap.getLayers().get("grounds");
+        ENDLVL = tiledMap.getLayers().get("end_LVL").getObjects();
         grounds = new Grounds(this, cam, PlayGame.mario);
         bricks = new Bricks(this, cam, PlayGame.mario);
         pipes = new Pipes(this, cam, PlayGame.mario);
@@ -83,5 +83,8 @@ public class Map extends Collisium implements Disposable  {
             }
 
         }
+    }
+    public void check_end_LVL(){
+        if ((int)(((RectangleMapObject) ENDLVL.get(0)).getRectangle().getX() * RATIO) < PlayGame.mario.getX()) PlayGame.mario.Endgame = true;
     }
 }

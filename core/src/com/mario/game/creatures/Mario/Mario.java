@@ -94,6 +94,7 @@ public class Mario implements Disposable {
         mario_HUD = new Mario_HUD(this);
         mario_music = new Mario_music(this);
         setMarioSize(true);
+
         Endgame = false;
     }
 
@@ -102,6 +103,8 @@ public class Mario implements Disposable {
         mario_move.update(delta);
         mario_collisium.update(delta);
         mario_graphics.update(delta);
+
+        playGame.map.check_end_LVL();
     }
 
     @Override

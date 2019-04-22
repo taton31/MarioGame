@@ -21,6 +21,8 @@ public class play_game implements Screen {
 
     public final MarioGame game;
 
+    String string;
+
     private SpriteBatch batch;
     public OrthographicCamera camera;
     private Viewport viewport;
@@ -33,11 +35,11 @@ public class play_game implements Screen {
 
     play_game (final MarioGame gam, String name_LVL){
         game=gam;
+        string = name_LVL;
 
 
 
-
-        create_world(name_LVL);
+        create_world(name_LVL, false);
 
         //Goomba.create_Goombas(map.goombas_array, this, mario);
 
@@ -88,6 +90,7 @@ public class play_game implements Screen {
             scene.stage.draw();
             //time_render = 0f;
         //}
+        if (mario.Endgame)create_world("tile/map11.tmx", false);
     }
 
     @Override
@@ -116,13 +119,13 @@ public class play_game implements Screen {
     }
 
     private void update (float delta){
-        if (mario.Endgame)create_world("tile/map2.tmx");
+
         mario.update(delta);
         map.update(delta);
         //camera.update();
     }
 
-    public void create_world(String name_LVL){
+    public void create_world(String name_LVL, boolean next_LVL){
         if (scene != null && map != null && mario != null) {
             scene.dispose();
             map.dispose();
@@ -130,6 +133,7 @@ public class play_game implements Screen {
             batch.dispose();
             camera = null;
             viewport = null;
+            string = nexWorld(string);
         }
         camera = new OrthographicCamera();
         viewport = new ScreenViewport(camera);
@@ -138,8 +142,22 @@ public class play_game implements Screen {
         batch = new SpriteBatch();
         mario = new Mario(100,250, this);
         scene = new Scene(batch, mario, game);
+        if (next_LVL) name_LVL = string;
         map = new Map(this,  name_LVL, camera);
         MapObjects objects = map.tiledMap.getLayers().get("mario").getObjects();
         mario.setXY((int)(((RectangleMapObject) objects.get(0)).getRectangle().getX() * game.ratioY), (int)(((RectangleMapObject) objects.get(0)).getRectangle().getY() * game.ratioY));
+    }
+
+    String nexWorld (String a){
+        if (a.contains("11")) return "tile/map12.tmx";
+        if (a.contains("12")) return "tile/map13.tmx";
+        if (a.contains("13")) return "tile/map14.tmx";
+        if (a.contains("14")) return "tile/map21.tmx";
+        if (a.contains("21")) return "tile/map22.tmx";
+        if (a.contains("22")) return "tile/map23.tmx";
+        if (a.contains("23")) return "tile/map24.tmx";
+        if (a.contains("24")) return "tile/map31.tmx";
+        if (a.contains("31")) return "tile/map32.tmx";
+        return "tile/map11.tmx";
     }
 }

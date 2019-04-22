@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.mario.game.creatures.Mario.Mario;
@@ -88,4 +89,6 @@ public abstract class MapObject_ {
     protected boolean choose_crash (int k){
         return ((mario.getX() + mario.getWidth() / 2f > mapObjects.get(k).rectangle[0]) && (mario.getX() + mario.getWidth() / 2f < mapObjects.get(k).rectangle[2]));
     }
+
+
 }

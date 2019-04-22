@@ -1,6 +1,7 @@
 package com.mario.game.Map;
 
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
@@ -18,6 +19,7 @@ public abstract class Collisium {
     public TiledMap tiledMap;
     protected TiledMapRenderer tiledMapRenderer;
     TiledMapTileLayer layer;
+    MapObjects ENDLVL;
 
 
     protected HashSet<Vector2> set;

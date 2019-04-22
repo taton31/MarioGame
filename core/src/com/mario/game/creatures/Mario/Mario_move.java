@@ -31,8 +31,8 @@ class Mario_move{
 
     private void update_velocity (float delta){
 
-        if (mario.position.x > 1000){
-            mario.Endgame = true;}
+        //if (mario.position.x > 1000){
+        //    mario.Endgame = true;}
         ///////////////////
         mario.playGame.scene.testDesktop.update();
 
@@ -109,8 +109,11 @@ class Mario_move{
             if (mario.playGame.game.mario_health == 0){
                 mario.playGame.game.setScreen(new GameOver(mario.playGame.game));
             }
+            mario.playGame.scene.timer = 0;
+            mario.marioIsDead = false;
+            mario.Endgame = true;
             mario.playGame.map.dispose();
-            mario.playGame.map = new Map(mario.playGame,  "tile/map1.tmx",mario.playGame.camera);
+            mario.playGame.map = new Map(mario.playGame,  "tile/map11.tmx",mario.playGame.camera);
 
 
         }
