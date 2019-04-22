@@ -31,6 +31,8 @@ class Mario_move{
 
     private void update_velocity (float delta){
 
+        if (mario.position.x > 1000){
+            mario.Endgame = true;}
         ///////////////////
         mario.playGame.scene.testDesktop.update();
 

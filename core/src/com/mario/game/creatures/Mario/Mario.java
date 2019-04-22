@@ -37,6 +37,7 @@ public class Mario implements Disposable {
      boolean timeToRedefineMario;
      boolean marioIsDead;
      boolean marioIsInvulnerable;
+     public boolean Endgame;
 
      Sound stomp;
      Sound mariodie;
@@ -93,8 +94,7 @@ public class Mario implements Disposable {
         mario_HUD = new Mario_HUD(this);
         mario_music = new Mario_music(this);
         setMarioSize(true);
-
-
+        Endgame = false;
     }
 
 

@@ -34,11 +34,9 @@ public class play_game implements Screen {
     play_game (final MarioGame gam, String name_LVL){
         game=gam;
 
-        camera = new OrthographicCamera();
-        viewport = new ScreenViewport(camera);
-        camera.setToOrtho(false, MarioGame.WIDTH * game.ratioX, MarioGame.HEIGHT * game.ratioY);
 
-        batch = new SpriteBatch();
+
+
         create_world(name_LVL);
 
         //Goomba.create_Goombas(map.goombas_array, this, mario);
@@ -61,7 +59,7 @@ public class play_game implements Screen {
         if (scene.timer < 3){
             scene.start_game();
             batch.begin();
-            batch.draw(scene.texture, camera.position.x - 27, camera.position.y, 32, 32);
+            batch.draw(scene.texture, Gdx.graphics.getWidth() / 2f - 27, camera.position.y, 32, 32);
             batch.end();
 
             scene.stage.act(delta);
@@ -118,6 +116,7 @@ public class play_game implements Screen {
     }
 
     private void update (float delta){
+        if (mario.Endgame)create_world("tile/map2.tmx");
         mario.update(delta);
         map.update(delta);
         //camera.update();
@@ -128,7 +127,15 @@ public class play_game implements Screen {
             scene.dispose();
             map.dispose();
             mario.dispose();
+            batch.dispose();
+            camera = null;
+            viewport = null;
         }
+        camera = new OrthographicCamera();
+        viewport = new ScreenViewport(camera);
+        camera.setToOrtho(false, MarioGame.WIDTH * game.ratioX, MarioGame.HEIGHT * game.ratioY);
+
+        batch = new SpriteBatch();
         mario = new Mario(100,250, this);
         scene = new Scene(batch, mario, game);
         map = new Map(this,  name_LVL, camera);
