@@ -34,7 +34,7 @@ class Mario_move{
         //if (mario.position.x > 1000){
         //    mario.Endgame = true;}
         ///////////////////
-        mario.playGame.scene.testDesktop.update();
+        //mario.playGame.scene.testDesktop.update();
 
         if (!mario.press_button && mario.velocity.x !=0) {
             if ((mario.velocity.x + mario.acceleration.x * delta) * mario.sign_velocity < 0)

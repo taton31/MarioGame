@@ -10,7 +10,7 @@ class Mario_HUD{
     Mario_HUD(Mario mar){
         mario = mar;
         mario.velocity_start = (int) ( 200 * mario.RATIO);
-        mario.velocity_jump = (int) ( 201 * mario.RATIO);
+        mario.velocity_jump = (int) ( 210 * mario.RATIO);
         mario.max_velocity = (int) (100 * mario.RATIO);
         mario.acceleration_G = (int) (1000 * mario.RATIO);
         mario.koff_acc = 0.3f;

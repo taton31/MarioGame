@@ -172,7 +172,7 @@ public class bullet {
 
     private void check_kill(){
         for (Vector2 vec : bias){
-            if (vec.x != 0){
+            if (vec.x != 0 && vec.x * velocity.x < 0){
                 playGame.map.bullet_array.removeValue(this, true);
             }
         }

@@ -94,7 +94,7 @@ public class Mario implements Disposable {
         mario_graphics = new Mario_graphics(this);
         mario_HUD = new Mario_HUD(this);
         mario_music = new Mario_music(this);
-        setMarioSize(true);
+        //setMarioSize(true);
 
         Endgame = false;
     }
