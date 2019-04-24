@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.mario.game.creatures.Mario.Mario;
@@ -152,7 +155,12 @@ public class Coins extends MapObject_ {
                     map.getMushrooms().add(new mushroom(mapObjects.get(k).rectangle[0],mapObjects.get(k).rectangle[7], map.PlayGame, mario ));
                 }
 
-            mapObjects.get(k).empty = true;
+                mapObjects.get(k).empty = true;
+
+
+            TiledMapTile tile = map.tiledMap.getTileSets().getTile(28);
+            map.layer.getCell((int) (mapObjects.get(k).rectangle[0] / tile_size), (int) (mapObjects.get(k).rectangle[1] / tile_size)).setTile(null).setTile(tile);
+            ((OrthoCachedTiledMapRenderer) map.tiledMapRenderer).invalidateCache();
 
         }
     }

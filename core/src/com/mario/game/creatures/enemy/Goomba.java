@@ -36,7 +36,7 @@ public class Goomba {
     public final int width;
     public int height;
     private HashSet<Vector2> bias, bias_ground, bias_bricks, bias_coins, bias_pipes;
-    private float[] shape;
+    public float[] shape;
     private float timer;
     public Random random;
 

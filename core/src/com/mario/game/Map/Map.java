@@ -13,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.mario.game.creatures.Mario.Mario;
+import com.mario.game.creatures.bullet;
 import com.mario.game.creatures.enemy.Goomba;
 import com.mario.game.Screens.play_game;
 import com.mario.game.creatures.mushroom;
@@ -29,6 +30,7 @@ public class Map extends Collisium implements Disposable  {
 // в конструкторе должно быть количесв=тво монет и колво жизней марио
     public Array<Goomba> goombas_array;
     public Array<mushroom> mushroom_array;
+    public Array<bullet> bullet_array;
 
     public Map(play_game PlayGa, String fileName, OrthographicCamera cam) {
         super(PlayGa.game.ratioY);
@@ -42,8 +44,10 @@ public class Map extends Collisium implements Disposable  {
         bricks = new Bricks(this, cam, PlayGame.mario);
         pipes = new Pipes(this, cam, PlayGame.mario);
         coins = new Coins(this, cam, PlayGame.mario);
+
         goombas_array = new Array<Goomba>();
         mushroom_array = new Array<mushroom>();
+        bullet_array = new Array<bullet>();
 
         create_Goombas();
     }
@@ -59,6 +63,10 @@ public class Map extends Collisium implements Disposable  {
 
         for (mushroom mush : mushroom_array){
             mush.update(delta);
+        }
+
+        for (bullet bull : bullet_array){
+            bull.update(delta);
         }
     }
 

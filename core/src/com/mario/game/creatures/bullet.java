@@ -11,18 +11,21 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.mario.game.Screens.play_game;
 import com.mario.game.creatures.Mario.Mario;
+import com.mario.game.creatures.enemy.Goomba;
 
 import java.util.HashSet;
+import java.util.Random;
 
-public class mushroom {
+public class bullet {
 
     private final play_game playGame;
 
     public Vector2 position;
     public Vector2 velocity;
-    private Vector2 acceleration;
+    public Vector2 acceleration;
     private Mario mario;
     private Vector2 coll_mar;
+    private Vector2 temporary;
 
     private int velocity_jump;
     private int max_velocity;
@@ -32,47 +35,54 @@ public class mushroom {
     public int height;
     private HashSet<Vector2> bias, bias_ground, bias_bricks, bias_coins, bias_pipes;
     private float[] shape;
+    private float timer;
+    private Animation<TextureRegion> fly;
+
 
     public TextureRegion region;
 
 
-    public mushroom(float x, float y, final play_game a, Mario mar){
+    public bullet(float x, float y, final play_game a, Mario mar, boolean runningRight){
         playGame = a;
         mario = mar;
         float RATIO = playGame.game.ratioY;
         running_right = true;
         velocity_jump = (int) ( 301 * RATIO);
-        max_velocity = (int) (30 * RATIO);
-        int acceleration_G = (int) (1000 * RATIO);
+        max_velocity = (int) (120 * RATIO);
 
         was_coll_withMar = false;
-
+        doAnimation();
+        temporary = new Vector2();
         coll_mar = new Vector2();
         bias = new HashSet<Vector2>();
         shape = new float[8];
 
-        region = new TextureRegion(new Texture("enemy/mush.png"), 0,0,16,16);
-
-        width = (int) (16 * RATIO);
-        height = (int) (16 * RATIO);
+        width = (int) (8 * RATIO);
+        height = (int) (8 * RATIO);
+        timer = 0;
         position = new Vector2(x, y);
-        velocity = new Vector2( max_velocity, 0);
-        acceleration = new Vector2(0, -acceleration_G);
+        velocity = new Vector2( runningRight ? max_velocity : -max_velocity, -max_velocity);
+        acceleration = new Vector2(600 * (runningRight ? mario.getRATIO() : -mario.getRATIO()),-600 * mario.getRATIO());
     }
 
 
     public void  update (float delta){
         update_velocity(delta);
         collisium();
-        collisium_with_mar(delta);
+        collisium_with_enemy(delta);
     }
 
     private void update_velocity (float delta){
 
-        velocity.x = running_right ? max_velocity : -max_velocity;
+        timer = timer % 1000 + delta;
+        velocity.x += acceleration.x * delta;
         velocity.y += acceleration.y * delta;
 
-        if (velocity.y < -velocity_jump) velocity.y = -velocity_jump;
+        if (velocity.x > max_velocity) velocity.x = max_velocity;
+        if (velocity.x < -max_velocity) velocity.x = -max_velocity;
+        if (velocity.y < -max_velocity) velocity.y = -max_velocity;
+
+        region = fly.getKeyFrame(timer, true);
 
         position.x += velocity.x * delta;
         position.y += velocity.y * delta;
@@ -88,26 +98,24 @@ public class mushroom {
         bias_pipes = playGame.map.pipes.collisium(shape, true);
         bias_coins = playGame.map.coins.collisium(shape, true);
         check_sets();
-        check_revers();
+        check_kill();
 
         for (Vector2 vec : bias) {
-            position.x += vec.x;
+            if (vec.y != 0)
             position.y += vec.y;
-            vec.rotate90(1).nor();
-            if (vec.hasOppositeDirection(velocity)) vec.scl(-1);
-            velocity.set(vec.scl(vec.dot(velocity)));
-            if (velocity.x == 0) acceleration.x = 0;
+            velocity.y = max_velocity;
         }
 
     }
 
-    private void collisium_with_mar(float delta){
+    private void collisium_with_enemy(float delta){
 
-        coll_mar.set(playGame.map.collisium(shape, mario.shape));
-        if (!coll_mar.epsilonEquals(0,0) && !mario.isMarioDead()) {
-            if (mario.isMarioBig()) mario.setMarioFire(true);
-            else mario.setMarioSize(true);
-            playGame.map.mushroom_array.removeValue(this, true);
+        for (Goomba goomba : playGame.map.goombas_array){
+            coll_mar.set(playGame.map.collisium(shape, goomba.shape));
+            if (!coll_mar.epsilonEquals(0,0) && !goomba.DIE) {
+                playGame.map.bullet_array.removeValue(this, true);
+                goomba.DIE = true;
+            }
         }
     }
 
@@ -120,12 +128,25 @@ public class mushroom {
         shape[3] = position.y;
 
         shape[4] = position.x + width ;
-        shape[5] = position.y + 3 * height / 5f;
+        shape[5] = position.y + height;
 
         shape[6] = position.x;
-        shape[7] = position.y + 3 * height / 5f;
+        shape[7] = position.y + height;
     }
 
+    private void doAnimation(){
+        Array<TextureRegion> frames = new Array<TextureRegion>();
+
+        Texture texture = new Texture("fireball.png");
+
+        frames.add(new TextureRegion(texture, 0, 0, 8, 8));
+        frames.add(new TextureRegion(texture, 8, 0, 8, 8));
+        frames.add(new TextureRegion(texture, 16, 0, 8, 8));
+        frames.add(new TextureRegion(texture, 24, 0, 8, 8));
+        fly = new Animation<TextureRegion>(0.1f, frames);
+
+        frames.clear();
+    }
 
     private void check_sets(){
         bias.addAll(bias_ground);
@@ -149,14 +170,10 @@ public class mushroom {
         }
     }
 
-    private void check_revers(){
+    private void check_kill(){
         for (Vector2 vec : bias){
-            if (vec.x > 0) {
-                running_right = true;
-                return;
-            } else if (vec.x < 0) {
-                running_right = false;
-                return;
+            if (vec.x != 0){
+                playGame.map.bullet_array.removeValue(this, true);
             }
         }
     }

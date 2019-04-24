@@ -15,6 +15,7 @@ import com.mario.game.HUD.Scene;
 import com.mario.game.Map.Map;
 import com.mario.game.MarioGame;
 import com.mario.game.creatures.Mario.Mario;
+import com.mario.game.creatures.bullet;
 import com.mario.game.creatures.enemy.Goomba;
 import com.mario.game.creatures.mushroom;
 
@@ -86,6 +87,10 @@ public class play_game implements Screen {
 
             for (mushroom mash : map.mushroom_array){
                 batch.draw(mash.region, mash.position.x, mash.position.y, mash.width, mash.height);
+            }
+
+            for (bullet bull : map.bullet_array){
+                batch.draw(bull.region, bull.position.x, bull.position.y, bull.width, bull.height);
             }
 
             batch.end();

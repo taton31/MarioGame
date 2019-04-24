@@ -1,6 +1,8 @@
 package com.mario.game.creatures.Mario;
 
- class Mario_HUD{
+import com.mario.game.creatures.bullet;
+
+class Mario_HUD{
 
     private Mario mario;
 
@@ -41,7 +43,8 @@ package com.mario.game.creatures.Mario;
     }
 
     void press_fire (){
-
+        mario.playGame.map.bullet_array.add(new bullet(mario.runningRight ? mario.getX() - 8 * mario.getRATIO() + mario.getWidth() : mario.getX()+8 * mario.getRATIO(), mario.getY() + 2 * mario.getHeight() / 3f,
+                mario.playGame, mario, mario.runningRight));
     }
 
     void unpress_button (){
