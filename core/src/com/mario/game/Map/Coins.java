@@ -3,15 +3,18 @@ package com.mario.game.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.mario.game.creatures.Mario.Mario;
 import com.mario.game.creatures.enemy.Goomba;
+import com.mario.game.creatures.mushroom;
 
 import java.util.HashSet;
 
 public class Coins extends MapObject_ {
     private final float tile_size;
+
 
     Coins(Map ma, OrthographicCamera cam, Mario mar){
         super(ma, cam, mar);
@@ -27,6 +30,10 @@ public class Coins extends MapObject_ {
 
         mapObjects = new Array<MapObjects_rectangles>();
         get_mapObjects_rectangle();
+        for (MapObjects_rectangles cell : mapObjects) {
+            cell.get_view();
+        }
+
     }
 
     public HashSet<Vector2> collisium (float [] rectangle, boolean check_all_world){
@@ -134,7 +141,19 @@ public class Coins extends MapObject_ {
                     goomba.velocity.set(Math.signum(goomba.random.nextInt(1000) - 500) * (goomba.random.nextInt(150) + 150), 650);
                 }
             }
-                mario.getCoin().play();
+
+            if (mapObjects.get(k).empty) return;
+
+                if (mapObjects.get(k).coin || mapObjects.get(k).loopCoin) {
+                    mario.getCoin().play();
+                }
+                else  {
+                    mario.getPowerup_spawn().play();
+                    map.getMushrooms().add(new mushroom(mapObjects.get(k).rectangle[0],mapObjects.get(k).rectangle[7], map.PlayGame, mario ));
+                }
+
+            mapObjects.get(k).empty = true;
+
         }
     }
 

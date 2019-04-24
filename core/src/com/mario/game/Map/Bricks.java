@@ -19,6 +19,7 @@ public class Bricks extends MapObject_{
 
     private final float tile_size;
 
+
     Bricks(Map ma, OrthographicCamera cam, Mario mar){
         super(ma, cam, mar);
 

@@ -32,6 +32,7 @@ public class Mario implements Disposable {
      public float TimerInvulnerable;
      boolean runningRight;
      boolean marioIsBig;
+     boolean marioIsFire;
      boolean runGrowAnimation;
      boolean timeToDefineBigMario;
      boolean timeToRedefineMario;
@@ -166,6 +167,11 @@ public class Mario implements Disposable {
         marioIsBig = a;
         height = a ? (int) (30 * RATIO) : (int) (16 * RATIO);
         if (!a) setMarioInvulnerable();
+        (a ? powerup : powerdown).play(getPlayGame().game.MUS_ON / 100f);
+    }
+
+    public void setMarioFire(boolean a){
+        marioIsFire = a;
         (a ? powerup : powerdown).play(getPlayGame().game.MUS_ON / 100f);
     }
 

@@ -16,6 +16,7 @@ import com.mario.game.Map.Map;
 import com.mario.game.MarioGame;
 import com.mario.game.creatures.Mario.Mario;
 import com.mario.game.creatures.enemy.Goomba;
+import com.mario.game.creatures.mushroom;
 
 public class play_game implements Screen {
 
@@ -80,6 +81,10 @@ public class play_game implements Screen {
             batch.draw(mario.getTexture(), mario.position.x, mario.position.y, mario.getWidth(), mario.getHeight());
 
             for (Goomba mash : map.goombas_array){
+                batch.draw(mash.region, mash.position.x, mash.position.y, mash.width, mash.height);
+            }
+
+            for (mushroom mash : map.mushroom_array){
                 batch.draw(mash.region, mash.position.x, mash.position.y, mash.width, mash.height);
             }
 

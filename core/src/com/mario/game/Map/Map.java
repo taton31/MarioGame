@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.mario.game.creatures.Mario.Mario;
 import com.mario.game.creatures.enemy.Goomba;
 import com.mario.game.Screens.play_game;
+import com.mario.game.creatures.mushroom;
 
 
 public class Map extends Collisium implements Disposable  {
@@ -27,6 +28,7 @@ public class Map extends Collisium implements Disposable  {
 
 // в конструкторе должно быть количесв=тво монет и колво жизней марио
     public Array<Goomba> goombas_array;
+    public Array<mushroom> mushroom_array;
 
     public Map(play_game PlayGa, String fileName, OrthographicCamera cam) {
         super(PlayGa.game.ratioY);
@@ -41,6 +43,7 @@ public class Map extends Collisium implements Disposable  {
         pipes = new Pipes(this, cam, PlayGame.mario);
         coins = new Coins(this, cam, PlayGame.mario);
         goombas_array = new Array<Goomba>();
+        mushroom_array = new Array<mushroom>();
 
         create_Goombas();
     }
@@ -49,9 +52,13 @@ public class Map extends Collisium implements Disposable  {
         tiledMapRenderer.setView(PlayGame.camera);
 
         check_Goombas_move(goombas_array, PlayGame.mario);
-        for (Goomba mush : goombas_array){
+        for (Goomba goomba : goombas_array){
+            goomba.update(delta);
+            if (goomba.die_time > 1.5f) goombas_array.removeValue(goomba, true);
+        }
+
+        for (mushroom mush : mushroom_array){
             mush.update(delta);
-            if (mush.die_time > 1.5f) goombas_array.removeValue(mush, true);
         }
     }
 
@@ -67,6 +74,10 @@ public class Map extends Collisium implements Disposable  {
 
     public Array<Goomba> getGoomdas(){
         return goombas_array;
+    }
+
+    public Array<mushroom> getMushrooms(){
+        return mushroom_array;
     }
 
     public void create_Goombas (){
