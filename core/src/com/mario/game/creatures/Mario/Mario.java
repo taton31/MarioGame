@@ -32,7 +32,7 @@ public class Mario implements Disposable {
      public float TimerInvulnerable;
      public boolean runningRight;
      boolean marioIsBig;
-     boolean marioIsFire;
+     public boolean marioIsFire;
      boolean runGrowAnimation;
      boolean timeToDefineBigMario;
      boolean timeToRedefineMario;

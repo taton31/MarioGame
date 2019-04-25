@@ -145,7 +145,6 @@ public class Coins extends MapObject_ {
                 if (mapObjects.get(k).rectangle[0] < goomba.position.x + goomba.width / 2f && mapObjects.get(k).rectangle[2] > goomba.position.x + goomba.width / 2f &&
                         mapObjects.get(k).rectangle[7] < goomba.position.y + goomba.height / 2f && mapObjects.get(k).rectangle[7] + tile_size > goomba.position.y + goomba.height / 2f){
                     goomba.mushDie.flip(false, true);
-                    System.out.println(goomba.mushDie.isFlipY());
                     goomba.DIE = true;
                     goomba.get_shape_zero();
                     goomba.velocity.set(Math.signum(goomba.random.nextInt(1000) - 500) * (goomba.random.nextInt(150) + 150), 650);
