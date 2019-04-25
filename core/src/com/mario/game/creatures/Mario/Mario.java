@@ -30,7 +30,7 @@ public class Mario implements Disposable {
 
      float stateTimer;
      public float TimerInvulnerable;
-     boolean runningRight;
+     public boolean runningRight;
      boolean marioIsBig;
      boolean marioIsFire;
      boolean runGrowAnimation;
@@ -53,7 +53,8 @@ public class Mario implements Disposable {
      HashSet<Vector2> bias, bias_ground, bias_bricks, bias_coins, bias_pipes;
      public float[] shape;
 
-     boolean press_button = false;
+     boolean press_button_right = false;
+     boolean press_button_left = false;
      boolean press_button_up = false;
      boolean press_button_down = false;
 

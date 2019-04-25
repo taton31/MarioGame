@@ -10,6 +10,7 @@ class Mario_move{
 
     Mario_move(Mario mar, float x, float y){
         mario = mar;
+        mario.runningRight = true;
         mario.position = new Vector2(0, 0);
         mario.velocity = new Vector2(0, 0);
         mario.acceleration = new Vector2(0, -mario.acceleration_G);
@@ -35,8 +36,9 @@ class Mario_move{
         //    mario.Endgame = true;}
         ///////////////////
         //mario.playGame.scene.testDesktop.update();
-
-        if (!mario.press_button && mario.velocity.x !=0) {
+        if (mario.press_button_left) mario.acceleration.set(- mario.velocity_start, -mario.acceleration_G);
+        if (mario.press_button_right) mario.acceleration.set(mario.velocity_start, -mario.acceleration_G);
+        if (!(mario.press_button_left || mario.press_button_right) && mario.velocity.x !=0) {
             if ((mario.velocity.x + mario.acceleration.x * delta) * mario.sign_velocity < 0)
             {
                 mario.velocity.x=0;
@@ -49,7 +51,7 @@ class Mario_move{
             }
         }
 
-        if (mario.stayOnGround && mario.press_button && Math.signum(mario.velocity.x)*Math.signum(mario.acceleration.x) < 0){
+        if (mario.stayOnGround && (mario.press_button_left || mario.press_button_right) && Math.signum(mario.velocity.x)*Math.signum(mario.acceleration.x) < 0){
             mario.acceleration.x = -mario.velocity_start*mario.sign_velocity*1.5f;
         }
 

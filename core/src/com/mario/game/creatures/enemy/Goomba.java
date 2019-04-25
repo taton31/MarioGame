@@ -116,7 +116,7 @@ public class Goomba {
     private void doAnimation(){
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
-        Texture texture = new Texture("enemy/Goomba.png");
+        Texture texture = new Texture("enemy/goomba.png");
 
         frames.add(new TextureRegion(texture, 0, 0, 16, 16));
         frames.add(new TextureRegion(texture, 16, 0, 16, 16));
@@ -133,7 +133,7 @@ public class Goomba {
         get_shape();
         for (int k = 0; k < playGame.map.goombas_array.size; ++k) {
             if (playGame.map.goombas_array.get(k).position.x != position.x) {
-                temporary.set(playGame.map.collisium(playGame.map.goombas_array.get(k).shape, shape));
+                temporary.set(playGame.map.collisium_goomb(playGame.map.goombas_array.get(k).shape, shape));
                 if (temporary.epsilonEquals(0, 0)) continue;
                 playGame.map.goombas_array.get(k).running_right = !playGame.map.goombas_array.get(k).running_right;
                 running_right = !running_right;

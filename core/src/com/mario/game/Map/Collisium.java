@@ -277,4 +277,56 @@ public abstract class Collisium {
         //layer.getCell(a, b).getTile().setOffsetY(j++);
         ((OrthoCachedTiledMapRenderer) tiledMapRenderer).invalidateCache();
     }
+
+
+    public Vector2 collisium_goomb(float[] body_first, float[] body_second){
+        RESULT.set(-111,111);
+        result.set(0,0);
+        set.clear();
+        j=0;
+        for (i = 0; i < (body_first.length / 2); ++i){
+            temporary_point.x = body_first[(2 * (i + 1)) % body_first.length] - body_first[2 * i];
+            temporary_point.y = body_first[(2 * (i + 1) + 1) % body_first.length] - body_first[2 * i + 1];
+
+            temporary_point.rotate90(1).nor();
+            if (!(contanes(temporary_point, set))) {
+                if (j < 4){
+                    vec[j].set(temporary_point);
+                    set.add(vec[j]);
+                    ++j;
+                } else set.add(temporary_point.cpy());
+
+            }
+
+        }
+
+        for (i = 0; i < (body_second.length / 2); ++i){
+            temporary_point.x = body_second[(2 * (i + 1)) % body_second.length] - body_second[2 * i];
+            temporary_point.y = body_second[(2 * (i + 1) + 1) % body_second.length] - body_second[2 * i + 1];
+            temporary_point.rotate90(1).nor();
+            //set.add( (Math.abs(temporary_point.angle()) % 180));
+            if (!(contanes(temporary_point, set))) {
+                if (j < 4){
+                    vec[j].set(temporary_point);
+                    set.add(vec[j]);
+                    ++j;
+                } else set.add(temporary_point.cpy());
+            }
+        }
+
+        for (Vector2 vector : set){
+            search_projection(body_first, vector, proj_first_point1, proj_first_point2);
+            search_projection(body_second, vector, proj_second_point1, proj_second_point2);
+            if (cross_projections(proj_first_point1, proj_first_point2, proj_second_point1, proj_second_point2, result)){
+                return result;
+            }
+            if (result.len2() > 0.000000001f && RESULT.len() > result.len() && Math.abs(result.x) > 0.5) {
+                RESULT.set(result);
+            }
+        }
+        if (RESULT.epsilonEquals(111,111)){
+            RESULT.set(0,0);
+        }
+        return RESULT;
+    }
 }

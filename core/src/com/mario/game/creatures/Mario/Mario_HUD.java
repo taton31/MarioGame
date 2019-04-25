@@ -18,12 +18,12 @@ class Mario_HUD{
 
     void press_right (){
         mario.acceleration.x = mario.velocity_start;
-        mario.press_button = true;
+        mario.press_button_right = true;
     }
 
     void press_left (){
         mario.acceleration.x = - mario.velocity_start;
-        mario.press_button = true;
+        mario.press_button_left = true;
     }
 
     void press_up (){
@@ -48,7 +48,7 @@ class Mario_HUD{
     }
 
     void unpress_button (){
-        mario.press_button = false;
+        mario.press_button_left= mario.press_button_right = false;
     }
 
     void unpress_button_up (){
