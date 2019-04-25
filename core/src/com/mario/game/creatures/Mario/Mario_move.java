@@ -8,9 +8,10 @@ import com.mario.game.Screens.GameOver;
 class Mario_move{
     Mario mario;
 
-    Mario_move(Mario mar, float x, float y){
+    Mario_move(Mario mar){
         mario = mar;
         mario.runningRight = true;
+        mario.Endgame_dead = mario.Endgame = false;
         mario.position = new Vector2(0, 0);
         mario.velocity = new Vector2(0, 0);
         mario.acceleration = new Vector2(0, -mario.acceleration_G);
@@ -35,7 +36,7 @@ class Mario_move{
         //if (mario.position.x > 1000){
         //    mario.Endgame = true;}
         ///////////////////
-        //mario.playGame.scene.testDesktop.update();
+        mario.playGame.scene.testDesktop.update();
         if (mario.press_button_left) mario.acceleration.set(- mario.velocity_start, -mario.acceleration_G);
         if (mario.press_button_right) mario.acceleration.set(mario.velocity_start, -mario.acceleration_G);
         if (!(mario.press_button_left || mario.press_button_right) && mario.velocity.x !=0) {
@@ -113,7 +114,7 @@ class Mario_move{
             }
             mario.playGame.scene.timer = 0;
             mario.marioIsDead = false;
-            mario.Endgame = true;
+            mario.Endgame_dead = true;
             mario.playGame.map.dispose();
             mario.playGame.map = new Map(mario.playGame,  "tile/map11.tmx",mario.playGame.camera);
 

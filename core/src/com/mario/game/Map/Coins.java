@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mario.game.creatures.Mario.Mario;
 import com.mario.game.creatures.enemy.Goomba;
 import com.mario.game.creatures.mushroom;
+import com.mario.game.creatures.mushroomUP;
 
 import java.util.HashSet;
 
@@ -45,10 +46,15 @@ public class Coins extends MapObject_ {
         temporary_arr[1].set(0,0);
 
         for (int i = 0 ;i < mapObjects.size; i++){
+
+
+
             if (!check_all_world && !check_camera(mapObjects.get(i).rectangle)) continue;
             temporary.set(map.collisium(mapObjects.get(i).rectangle, rectangle));
 
             if (temporary.epsilonEquals(0,0)) continue;
+
+            if (mapObjects.get(i).health && (temporary.x != 0 || temporary.y > 0 || mario.velocity.y < 0))  continue;
 
             if( check_direction(temporary, mapObjects.get(i).rectangle) ) continue;
 
@@ -147,21 +153,47 @@ public class Coins extends MapObject_ {
 
             if (mapObjects.get(k).empty) return;
 
-                if (mapObjects.get(k).coin || mapObjects.get(k).loopCoin) {
+                if (mapObjects.get(k).coin) {
                     mario.getCoin().play();
+                } else if ( mapObjects.get(k).loopCoin){
+                    mario.getCoin().play();
+                    if (mapObjects.get(k).timeloop == -1f) mapObjects.get(k).timeloop = 0f;
                 }
-                else  {
+                else if (mapObjects.get(k).mursh) {
                     mario.getPowerup_spawn().play();
                     map.getMushrooms().add(new mushroom(mapObjects.get(k).rectangle[0],mapObjects.get(k).rectangle[7], map.PlayGame, mario ));
+                } else {
+                    mario.getPowerup_spawn().play();
+                    map.getMushroomsUP().add(new mushroomUP(mapObjects.get(k).rectangle[0],mapObjects.get(k).rectangle[7], map.PlayGame, mario ));
+                    mapObjects.get(k).health = false;
+                    mapObjects.get(k).coin = true;
                 }
 
+
+
+            if (!mapObjects.get(k).loopCoin) {
                 mapObjects.get(k).empty = true;
+                TiledMapTile tile = map.tiledMap.getTileSets().getTile(28);
+                map.layer.getCell((int) (mapObjects.get(k).rectangle[0] / tile_size), (int) (mapObjects.get(k).rectangle[1] / tile_size)).setTile(null).setTile(tile);
+                ((OrthoCachedTiledMapRenderer) map.tiledMapRenderer).invalidateCache();
+            }
 
+        }
+    }
 
-            TiledMapTile tile = map.tiledMap.getTileSets().getTile(28);
-            map.layer.getCell((int) (mapObjects.get(k).rectangle[0] / tile_size), (int) (mapObjects.get(k).rectangle[1] / tile_size)).setTile(null).setTile(tile);
-            ((OrthoCachedTiledMapRenderer) map.tiledMapRenderer).invalidateCache();
+    public void update_loop (float delta) {
+        for (int k = 0; k < mapObjects.size; k++) {
+            if (mapObjects.get(k).timeloop == -1f) continue;
 
+            mapObjects.get(k).timeloop += delta;
+
+            if (mapObjects.get(k).timeloop > 4f) {
+                mapObjects.get(k).empty = true;
+                TiledMapTile tile = map.tiledMap.getTileSets().getTile(28);
+                map.layer.getCell((int) (mapObjects.get(k).rectangle[0] / tile_size), (int) (mapObjects.get(k).rectangle[1] / tile_size)).setTile(null).setTile(tile);
+                ((OrthoCachedTiledMapRenderer) map.tiledMapRenderer).invalidateCache();
+                mapObjects.get(k).timeloop = -1f;
+            }
         }
     }
 

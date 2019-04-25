@@ -18,18 +18,21 @@ import com.mario.game.creatures.Mario.Mario;
 import com.mario.game.creatures.bullet;
 import com.mario.game.creatures.enemy.Goomba;
 import com.mario.game.creatures.mushroom;
+import com.mario.game.creatures.mushroomUP;
 
 public class play_game implements Screen {
 
     public final MarioGame game;
 
-    String string;
+    String name_LVL;
 
     private SpriteBatch batch;
     public OrthographicCamera camera;
     private Viewport viewport;
     public Map map;
     public Mario mario;
+    public boolean marioIsBig;
+    public boolean marioIsFire;
     private float time_render = 0f;
 
     public Scene scene;
@@ -37,13 +40,13 @@ public class play_game implements Screen {
 
     play_game (final MarioGame gam, String name_LVL){
         game=gam;
-        string = name_LVL;
+        this.name_LVL = name_LVL;
+        marioIsBig = false;
+        marioIsFire = false;
 
 
 
-        create_world(name_LVL, false);
-
-        //Goomba.create_Goombas(map.goombas_array, this, mario);
+        create_world(name_LVL);
 
     }
 
@@ -89,6 +92,10 @@ public class play_game implements Screen {
                 batch.draw(mash.region, mash.position.x, mash.position.y, mash.width, mash.height);
             }
 
+            for (mushroomUP mash : map.mushroomUP_array){
+                batch.draw(mash.region, mash.position.x, mash.position.y, mash.width, mash.height);
+            }
+
             for (bullet bull : map.bullet_array){
                 batch.draw(bull.region, bull.position.x, bull.position.y, bull.width, bull.height);
             }
@@ -100,7 +107,8 @@ public class play_game implements Screen {
             scene.stage.draw();
             //time_render = 0f;
         //}
-        if (mario.Endgame)create_world("tile/map11.tmx", false);
+        if (mario.Endgame) next_world(name_LVL);
+        if (mario.Endgame_dead) create_world(name_LVL);
     }
 
     @Override
@@ -135,7 +143,7 @@ public class play_game implements Screen {
         //camera.update();
     }
 
-    public void create_world(String name_LVL, boolean next_LVL){
+    public void create_world(String name_LVL){
         if (scene != null && map != null && mario != null) {
             scene.dispose();
             map.dispose();
@@ -143,31 +151,52 @@ public class play_game implements Screen {
             batch.dispose();
             camera = null;
             viewport = null;
-            string = nexWorld(string);
         }
         camera = new OrthographicCamera();
         viewport = new ScreenViewport(camera);
         camera.setToOrtho(false, MarioGame.WIDTH * game.ratioX, MarioGame.HEIGHT * game.ratioY);
 
         batch = new SpriteBatch();
-        mario = new Mario(100,250, this);
+        mario = new Mario(this,marioIsBig, marioIsFire);
         scene = new Scene(batch, mario, game);
-        if (next_LVL) name_LVL = string;
+        map = new Map(this,  name_LVL, camera);
+        MapObjects objects = map.tiledMap.getLayers().get("mario").getObjects();
+        mario.setXY((int)(((RectangleMapObject) objects.get(0)).getRectangle().getX() * game.ratioY), (int)(((RectangleMapObject) objects.get(0)).getRectangle().getY() * game.ratioY));
+    }
+
+    public void next_world(String nameLVL){
+        if (scene != null && map != null && mario != null) {
+            scene.dispose();
+            map.dispose();
+            mario.dispose();
+            batch.dispose();
+            camera = null;
+            viewport = null;
+
+        }
+        name_LVL = nexWorld(nameLVL);
+        camera = new OrthographicCamera();
+        viewport = new ScreenViewport(camera);
+        camera.setToOrtho(false, MarioGame.WIDTH * game.ratioX, MarioGame.HEIGHT * game.ratioY);
+
+        batch = new SpriteBatch();
+        mario = new Mario(this,marioIsBig, marioIsFire);
+        scene = new Scene(batch, mario, game);
         map = new Map(this,  name_LVL, camera);
         MapObjects objects = map.tiledMap.getLayers().get("mario").getObjects();
         mario.setXY((int)(((RectangleMapObject) objects.get(0)).getRectangle().getX() * game.ratioY), (int)(((RectangleMapObject) objects.get(0)).getRectangle().getY() * game.ratioY));
     }
 
     String nexWorld (String a){
-        if (a.contains("11")) return "tile/map12.tmx";
-        if (a.contains("12")) return "tile/map13.tmx";
-        if (a.contains("13")) return "tile/map14.tmx";
-        if (a.contains("14")) return "tile/map21.tmx";
-        if (a.contains("21")) return "tile/map22.tmx";
-        if (a.contains("22")) return "tile/map23.tmx";
-        if (a.contains("23")) return "tile/map24.tmx";
-        if (a.contains("24")) return "tile/map31.tmx";
-        if (a.contains("31")) return "tile/map32.tmx";
+        if (a.contains("11")) {game.number_world++; return "tile/map12.tmx"; }
+        if (a.contains("12")) {game.number_world++; return "tile/map13.tmx";}
+        if (a.contains("13")) {game.number_world++; return "tile/map14.tmx";}
+        if (a.contains("14")) {game.number_world += 10 - 3; return "tile/map21.tmx";}
+        if (a.contains("21")) {game.number_world++; return "tile/map22.tmx";}
+        if (a.contains("22")) {game.number_world++; return "tile/map23.tmx";}
+        if (a.contains("23")) {game.number_world++; return "tile/map24.tmx";}
+        if (a.contains("24")) {game.number_world++; return "tile/map31.tmx";}
+        if (a.contains("31")) {game.number_world += 10 - 3; return "tile/map32.tmx";}
         return "tile/map11.tmx";
     }
 }

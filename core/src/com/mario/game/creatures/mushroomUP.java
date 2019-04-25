@@ -1,4 +1,4 @@
-package com.mario.game.creatures.enemy;
+package com.mario.game.creatures;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,9 +13,8 @@ import com.mario.game.Screens.play_game;
 import com.mario.game.creatures.Mario.Mario;
 
 import java.util.HashSet;
-import java.util.Random;
 
-public class Goomba {
+public class mushroomUP {
 
     private final play_game playGame;
 
@@ -24,54 +23,40 @@ public class Goomba {
     private Vector2 acceleration;
     private Mario mario;
     private Vector2 coll_mar;
-    private Vector2 temporary;
 
-    private  int velocity_jump;
-    private  int max_velocity;
+    private int velocity_jump;
+    private int max_velocity;
     private boolean running_right;
-    public boolean DIE;
-    public boolean stay;
     public boolean was_coll_withMar;
-    public float die_time;
     public final int width;
     public int height;
     private HashSet<Vector2> bias, bias_ground, bias_bricks, bias_coins, bias_pipes;
-    public float[] shape;
-    private float timer;
-    public Random random;
+    private float[] shape;
 
-    private Animation<TextureRegion> mushRun;
-    public TextureRegion mushDie;
     public TextureRegion region;
 
 
-    public Goomba(float x, float y, final play_game a, Mario mar){
-        random = new Random();
+    public mushroomUP(float x, float y, final play_game a, Mario mar){
         playGame = a;
         mario = mar;
         float RATIO = playGame.game.ratioY;
-        DIE = false;
-        running_right = false;
+        running_right = true;
         velocity_jump = (int) ( 301 * RATIO);
         max_velocity = (int) (30 * RATIO);
         int acceleration_G = (int) (1000 * RATIO);
 
-        stay = true;
         was_coll_withMar = false;
 
-        temporary = new Vector2();
         coll_mar = new Vector2();
         bias = new HashSet<Vector2>();
         shape = new float[8];
-        doAnimation();
-        region = mushDie;
+
+        region = new TextureRegion(new Texture("enemy/mushUP.png"), 0,0,16,16);
 
         width = (int) (16 * RATIO);
         height = (int) (16 * RATIO);
-        timer = 0;
-        die_time = 0;
         position = new Vector2(x, y);
-        velocity = new Vector2( -max_velocity, 0);
+        velocity = new Vector2( max_velocity, 0);
         acceleration = new Vector2(0, -acceleration_G);
     }
 
@@ -83,62 +68,20 @@ public class Goomba {
     }
 
     private void update_velocity (float delta){
-        if (stay) return;
-        if (DIE){
-            if (mushDie.isFlipY()){
-                velocity.y += acceleration.y * delta;
-                position.x += velocity.x * delta;
-                position.y += velocity.y * delta;
-                region = mushRun.getKeyFrame(0);
-                if (!region.isFlipY()) region.flip(false, true);
-                return;
-            }
-            region = mushDie;
-            return;
-        }
-        timer = timer % 1000 + delta;
 
         velocity.x = running_right ? max_velocity : -max_velocity;
         velocity.y += acceleration.y * delta;
-
-        region = mushRun.getKeyFrame(timer, true);
 
         if (velocity.y < -velocity_jump) velocity.y = -velocity_jump;
 
         position.x += velocity.x * delta;
         position.y += velocity.y * delta;
 
-        if (position.y + 150 < 0) DIE = true;
-    }
-
-
-
-    private void doAnimation(){
-        Array<TextureRegion> frames = new Array<TextureRegion>();
-
-        Texture texture = new Texture("enemy/goomba.png");
-
-        frames.add(new TextureRegion(texture, 0, 0, 16, 16));
-        frames.add(new TextureRegion(texture, 16, 0, 16, 16));
-        mushRun = new Animation<TextureRegion>(0.4f, frames);
-
-        frames.clear();
-
-        mushDie = new TextureRegion(texture, 32, 0, 16, 16);
     }
 
 
     private void collisium(){
-        if (DIE) return;
         get_shape();
-        for (int k = 0; k < playGame.map.goombas_array.size; ++k) {
-            if (playGame.map.goombas_array.get(k).position.x != position.x) {
-                temporary.set(playGame.map.collisium_goomb(playGame.map.goombas_array.get(k).shape, shape));
-                if (temporary.epsilonEquals(0, 0)) continue;
-                playGame.map.goombas_array.get(k).running_right = !playGame.map.goombas_array.get(k).running_right;
-                running_right = !running_right;
-            }
-        }
         bias.clear();
         bias_ground = playGame.map.grounds.collisium(shape, true);
         bias_bricks = playGame.map.bricks.collisium(shape, true);
@@ -159,28 +102,13 @@ public class Goomba {
     }
 
     private void collisium_with_mar(float delta){
-        if (DIE){
-            die_time += delta;
-            return;
-        }
 
         coll_mar.set(playGame.map.collisium(shape, mario.shape));
+        if (mario.velocity.y < 0) return;
         if (!coll_mar.epsilonEquals(0,0) && !mario.isMarioDead()) {
-            if (coll_mar.y > 0 && mario.getVelocityY() < 0){
-                if (was_coll_withMar) return;
-                DIE = true;
-                mario.velocity.y = velocity_jump / 1.6f;
-                mario.getStomp().play(mario.getPlayGame().game.MUS_ON / 100f);
-            } else {
-                was_coll_withMar = true;
-                if (mario.isMarioInvulnerable()) return;
-                if (mario.isMarioBig()){
-                    mario.setMarioSize(false);
-                } else {
-                    mario.setMarioDead();
-                }
-            }
-        } else was_coll_withMar = false;
+            playGame.game.mario_health++;
+            playGame.map.mushroomUP_array.removeValue(this, true);
+        }
     }
 
     private void get_shape(){
@@ -196,21 +124,6 @@ public class Goomba {
 
         shape[6] = position.x;
         shape[7] = position.y + 3 * height / 5f;
-
-        /*shape[0] = position.x ;
-        shape[1] = position.y;
-
-        shape[2] = position.x + width ;
-        shape[3] = position.y;
-
-        shape[4] = position.x + width ;
-        shape[5] = position.y + height / 2f;
-
-        shape[6] = position.x + width / 2f ;
-        shape[7] = position.y + height;
-
-        shape[8] = position.x ;
-        shape[9] = position.y + height / 2f;*/
     }
 
 

@@ -20,7 +20,6 @@ public abstract class MapObject_ {
     Array <MapObjects_rectangles> mapObjects;
     float[] rectangle_object;
     int length;
-    int i;
     int j;
     Vector2 temporary;
     protected HashSet<Vector2> set;

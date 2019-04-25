@@ -15,8 +15,10 @@ public class MapObjects_rectangles {
     public boolean mursh;
     public boolean health;
     public boolean empty;
+    public float timeloop;
 
     MapObjects_rectangles (MapObject a, float [] b){
+        timeloop = -1f;
         object = a;
         rectangle = new float[8];
         for (int i = 0; i < 8; ++i){

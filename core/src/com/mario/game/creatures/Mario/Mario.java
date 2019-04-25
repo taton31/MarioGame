@@ -39,6 +39,7 @@ public class Mario implements Disposable {
      boolean marioIsDead;
      boolean marioIsInvulnerable;
      public boolean Endgame;
+     public boolean Endgame_dead;
 
      Sound stomp;
      Sound mariodie;
@@ -88,16 +89,18 @@ public class Mario implements Disposable {
      private Mario_graphics mario_graphics;
      private Mario_music mario_music;
 
-    public Mario(float x, float y, final play_game a){
+    public Mario(final play_game a, boolean bigMario, boolean fireMario){
+        marioIsFire = fireMario;
+        marioIsBig = bigMario;
         playGame = a;
-        mario_move = new Mario_move(this, x, y);
+        mario_move = new Mario_move(this);
         mario_collisium = new Mario_collisium(this);
         mario_graphics = new Mario_graphics(this);
         mario_HUD = new Mario_HUD(this);
         mario_music = new Mario_music(this);
         //setMarioSize(true);
 
-        Endgame = false;
+
     }
 
 
@@ -170,12 +173,14 @@ public class Mario implements Disposable {
         if (!a) setMarioFire(false);
         if (!a) setMarioInvulnerable();
         (a ? powerup : powerdown).play(getPlayGame().game.MUS_ON / 100f);
+        playGame.marioIsBig = marioIsBig;
     }
 
     public void setMarioFire(boolean a){
         marioIsFire = a;
         playGame.scene.fire.setVisible(a);
         (a ? powerup : powerdown).play(getPlayGame().game.MUS_ON / 100f);
+        playGame.marioIsFire = marioIsFire;
     }
 
     public void press_right(){

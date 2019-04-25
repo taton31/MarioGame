@@ -27,7 +27,7 @@ public class main_menu_screen implements Screen {
         Table table = new Table();
         table.setFillParent(true);
 
-        game.font.getData().setScale(2f);
+        game.font.getData().setScale(1.5f * game.ratioY);
         textButtonStyle.font = game.font;
         TextButton play = new TextButton("PLAY", textButtonStyle);
         TextButton sett = new TextButton("SETTINGS", textButtonStyle);
