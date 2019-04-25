@@ -213,6 +213,21 @@ public class Goomba {
         shape[9] = position.y + height / 2f;*/
     }
 
+    public void get_shape_zero(){
+
+        shape[0] = position.x ;
+        shape[1] = -222;
+
+        shape[2] = position.x + width ;
+        shape[3] = -222;
+
+        shape[4] = position.x + width ;
+        shape[5] =-222 + 3 * height / 5f;
+
+        shape[6] = position.x;
+        shape[7] = -222 + 3 * height / 5f;
+    }
+
 
     private void check_sets(){
         bias.addAll(bias_ground);

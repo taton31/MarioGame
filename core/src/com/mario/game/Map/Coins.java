@@ -147,6 +147,7 @@ public class Coins extends MapObject_ {
                     goomba.mushDie.flip(false, true);
                     System.out.println(goomba.mushDie.isFlipY());
                     goomba.DIE = true;
+                    goomba.get_shape_zero();
                     goomba.velocity.set(Math.signum(goomba.random.nextInt(1000) - 500) * (goomba.random.nextInt(150) + 150), 650);
                 }
             }

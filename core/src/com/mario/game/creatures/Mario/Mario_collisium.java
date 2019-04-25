@@ -12,7 +12,7 @@ import java.util.HashSet;
         mario = mar;
         mario.RATIO = mario.playGame.game.ratioY;
         mario.width = (int) (12 * mario.RATIO);
-        mario.height = (int) (16 * mario.RATIO);
+        mario.height = mario.isMarioBig() ? (int) (30 * mario.RATIO) : (int) (16 * mario.RATIO);
 
         mario.bias = new HashSet<Vector2>();
         mario.shape = new float[12];
