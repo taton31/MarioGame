@@ -320,7 +320,7 @@ public abstract class Collisium {
             if (cross_projections(proj_first_point1, proj_first_point2, proj_second_point1, proj_second_point2, result)){
                 return result;
             }
-            if (result.len2() > 0.000000001f && RESULT.len() > result.len() && Math.abs(result.x) > 3) {
+            if (result.len2() > 0.000000001f && RESULT.len() > result.len() && Math.abs(result.x) > 3 * RATIO) {
                 RESULT.set(result);
             }
         }

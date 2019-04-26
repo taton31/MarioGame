@@ -105,6 +105,17 @@ public class Turtle {
             max_velocity = (int) (6 * 30 * mario.getRATIO());
         } else {
             region = turtleRun.getKeyFrame(timer, true);
+
+            if((velocity.x < 0 || !running_right) && region.isFlipX()){
+                region.flip(true, false);
+                //running_right = false;
+            }
+
+            else if((velocity.x > 0 || running_right) && !region.isFlipX()){
+                region.flip(true, false);
+                //running_right = true;
+            }
+
         }
         timer = timer % 1000 + delta;
         if ( !(underPan && !movePan))
