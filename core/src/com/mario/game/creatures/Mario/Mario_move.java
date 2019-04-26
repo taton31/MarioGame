@@ -35,7 +35,7 @@ class Mario_move{
 
         //if (mario.position.x > 1000){
         //    mario.Endgame = true;}
-        ///////////////////
+        //////////////////////////////////////////////////////////////////////////////
         mario.playGame.scene.testDesktop.update();
         if (mario.press_button_left) mario.acceleration.set(- mario.velocity_start, -mario.acceleration_G);
         if (mario.press_button_right) mario.acceleration.set(mario.velocity_start, -mario.acceleration_G);
@@ -76,6 +76,8 @@ class Mario_move{
 
         if (mario.position.y < 0) {
             mario.setHeight(false);
+            mario.setMarioFire(false);
+            mario.setMarioSize(false);
             mario.setMarioDead();
         }
 

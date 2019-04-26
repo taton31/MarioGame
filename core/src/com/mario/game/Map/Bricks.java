@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.mario.game.creatures.Mario.Mario;
 import com.mario.game.creatures.enemy.Goomba;
+import com.mario.game.creatures.enemy.Turtle;
 
 import java.util.HashSet;
 import java.util.Random;
@@ -125,7 +126,6 @@ public class Bricks extends MapObject_{
         }
         return false;
     }
-//отсрочим разрушение на кадр, что бы успели проверить, стоит ли на блоке гумба
     void check_crash (Vector2 temp, int k){
         if (temp.x == 0 && temp.y < 0){
 
@@ -139,9 +139,19 @@ public class Bricks extends MapObject_{
                 }
             }
 
+            for (Turtle turtle : map.turtles_array){
+                if (mapObjects.get(k).rectangle[0] < turtle.position.x + turtle.width / 2f && mapObjects.get(k).rectangle[2] > turtle.position.x + turtle.width / 2f &&
+                        mapObjects.get(k).rectangle[7] < turtle.position.y + turtle.height / 2f && mapObjects.get(k).rectangle[7] + tile_size > turtle.position.y + turtle.height / 2f){
+                    turtle.turtleDie.flip(false, true);
+                    turtle.DIE = true;
+                    turtle.get_shape_zero();
+                    turtle.velocity.set(Math.signum(turtle.random.nextInt(1000) - 500) * (turtle.random.nextInt(150) + 150), 650);
+                }
+            }
+
             if (mario.isMarioBig()){
                 mario.getBreakblock().play();
-                map.delete_tile((int) (mapObjects.get(k).rectangle[0] / tile_size), (int) (mapObjects.get(k).rectangle[1] / tile_size));
+                map.delete_tile((int) ((mapObjects.get(k).rectangle[0] + 2) / tile_size), (int) (mapObjects.get(k).rectangle[1] / tile_size));
                 mapObjects.removeIndex(k);
 
             } else {

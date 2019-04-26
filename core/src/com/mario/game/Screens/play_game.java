@@ -17,6 +17,7 @@ import com.mario.game.MarioGame;
 import com.mario.game.creatures.Mario.Mario;
 import com.mario.game.creatures.bullet;
 import com.mario.game.creatures.enemy.Goomba;
+import com.mario.game.creatures.enemy.Turtle;
 import com.mario.game.creatures.mushroom;
 import com.mario.game.creatures.mushroomUP;
 
@@ -66,7 +67,7 @@ public class play_game implements Screen {
         if (scene.timer < 3){
             scene.start_game();
             batch.begin();
-            batch.draw(scene.texture, Gdx.graphics.getWidth() / 2f - 27, camera.position.y, 32, 32);
+            batch.draw(scene.texture, Gdx.graphics.getWidth() / 2f - 12 * mario.getRATIO(), camera.position.y, 16 * mario.getRATIO(), 16  * mario.getRATIO());
             batch.end();
 
             scene.stage.act(delta);
@@ -90,6 +91,10 @@ public class play_game implements Screen {
 
             for (mushroom mash : map.mushroom_array){
                 batch.draw(mash.region, mash.position.x, mash.position.y, mash.width, mash.height);
+            }
+
+            for (Turtle turt : map.turtles_array){
+                batch.draw(turt.region, turt.position.x, turt.position.y, turt.width, turt.height);
             }
 
             for (mushroomUP mash : map.mushroomUP_array){

@@ -174,7 +174,7 @@ public class Coins extends MapObject_ {
             if (!mapObjects.get(k).loopCoin) {
                 mapObjects.get(k).empty = true;
                 TiledMapTile tile = map.tiledMap.getTileSets().getTile(28);
-                map.layer.getCell((int) (mapObjects.get(k).rectangle[0] / tile_size), (int) (mapObjects.get(k).rectangle[1] / tile_size)).setTile(null).setTile(tile);
+                map.layer.getCell((int) ((mapObjects.get(k).rectangle[0]+2) / tile_size), (int) (mapObjects.get(k).rectangle[1] / tile_size)).setTile(null).setTile(tile);
                 ((OrthoCachedTiledMapRenderer) map.tiledMapRenderer).invalidateCache();
             }
 
@@ -187,10 +187,10 @@ public class Coins extends MapObject_ {
 
             mapObjects.get(k).timeloop += delta;
 
-            if (mapObjects.get(k).timeloop > 4f) {
+            if (mapObjects.get(k).timeloop > 3f) {
                 mapObjects.get(k).empty = true;
                 TiledMapTile tile = map.tiledMap.getTileSets().getTile(28);
-                map.layer.getCell((int) (mapObjects.get(k).rectangle[0] / tile_size), (int) (mapObjects.get(k).rectangle[1] / tile_size)).setTile(null).setTile(tile);
+                map.layer.getCell((int)((mapObjects.get(k).rectangle[0]+2) / tile_size), (int) (mapObjects.get(k).rectangle[1] / tile_size)).setTile(null).setTile(tile);
                 ((OrthoCachedTiledMapRenderer) map.tiledMapRenderer).invalidateCache();
                 mapObjects.get(k).timeloop = -1f;
             }

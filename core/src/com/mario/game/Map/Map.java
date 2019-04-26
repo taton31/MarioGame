@@ -16,6 +16,7 @@ import com.mario.game.creatures.Mario.Mario;
 import com.mario.game.creatures.bullet;
 import com.mario.game.creatures.enemy.Goomba;
 import com.mario.game.Screens.play_game;
+import com.mario.game.creatures.enemy.Turtle;
 import com.mario.game.creatures.mushroom;
 import com.mario.game.creatures.mushroomUP;
 
@@ -33,6 +34,7 @@ public class Map extends Collisium implements Disposable  {
     public Array<mushroom> mushroom_array;
     public Array<mushroomUP> mushroomUP_array;
     public Array<bullet> bullet_array;
+    public Array<Turtle> turtles_array;
 
     public Map(play_game PlayGa, String fileName, OrthographicCamera cam) {
         super(PlayGa.game.ratioY);
@@ -48,6 +50,7 @@ public class Map extends Collisium implements Disposable  {
         coins = new Coins(this, cam, PlayGame.mario);
 
         goombas_array = new Array<Goomba>();
+        turtles_array = new Array<Turtle>();
         mushroom_array = new Array<mushroom>();
         mushroomUP_array = new Array<mushroomUP>();
         bullet_array = new Array<bullet>();
@@ -61,6 +64,7 @@ public class Map extends Collisium implements Disposable  {
         coins.update_loop(delta);
 
         check_Goombas_move(goombas_array, PlayGame.mario);
+        check_Turtles_move(turtles_array, PlayGame.mario);
         for (Goomba goomba : goombas_array){
             goomba.update(delta);
             if (goomba.die_time > 1.5f) goombas_array.removeValue(goomba, true);
@@ -68,6 +72,10 @@ public class Map extends Collisium implements Disposable  {
 
         for (mushroom mush : mushroom_array){
             mush.update(delta);
+        }
+
+        for (Turtle turt : turtles_array){
+            turt.update(delta);
         }
 
         for (mushroomUP mush : mushroomUP_array){
@@ -108,6 +116,11 @@ public class Map extends Collisium implements Disposable  {
         for (MapObject obj : objects){
             goombas_array.add(new Goomba(((RectangleMapObject) obj).getRectangle().getX() * RATIO,((RectangleMapObject) obj).getRectangle().getY() * RATIO, PlayGame, PlayGame.mario));
         }
+
+        objects = tiledMap.getLayers().get("turtles").getObjects();
+        for (MapObject obj : objects){
+            turtles_array.add(new Turtle(((RectangleMapObject) obj).getRectangle().getX() * RATIO,((RectangleMapObject) obj).getRectangle().getY() * RATIO, PlayGame, PlayGame.mario));
+        }
     }
 
     public void check_Goombas_move(Array<Goomba> arr, Mario mario){
@@ -115,7 +128,14 @@ public class Map extends Collisium implements Disposable  {
             if (goomba.stay && goomba.position.x < mario.getPlayGame().camera.position.x + Gdx.app.getGraphics().getWidth() / 2f + 32 * mario.getRATIO()){
                 goomba.stay = false;
             }
+        }
+    }
 
+    public void check_Turtles_move(Array<Turtle> arr, Mario mario){
+        for (Turtle turtle : arr){
+            if (turtle.stay && turtle.position.x < mario.getPlayGame().camera.position.x + Gdx.app.getGraphics().getWidth() / 2f + 32 * mario.getRATIO()){
+                turtle.stay = false;
+            }
         }
     }
     public void check_end_LVL(){
