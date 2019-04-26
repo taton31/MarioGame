@@ -104,7 +104,7 @@ import com.badlogic.gdx.utils.Array;
                 break;
             case RUNNING:
                 if (mario.stayOnGround && mario.velocity.x * mario.acceleration.x < 0 && (mario.press_button_left || mario.press_button_right)) region = mario.marioStop;
-                else region = (mario.marioIsBig ? mario.bigMarioRun.getKeyFrame(mario.stateTimer, true) : mario.marioRun.getKeyFrame(mario.stateTimer, true));
+                else region = (mario.marioIsBig ? mario.bigMarioRun.getKeyFrame(mario.stateTimer * mario.RUN, true) : mario.marioRun.getKeyFrame(mario.stateTimer * mario.RUN, true));
                 break;
             case SITTING:
                 region = mario.marioIsBig ? mario.marioSit : mario.marioStand;

@@ -116,7 +116,7 @@ public class Goomba {
     private void doAnimation(){
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
-        Texture texture = new Texture("enemy/goomba.png");
+        Texture texture = new Texture(playGame.name_LVL.contains("black") ? "enemy/goombablack.png" : "enemy/goomba.png");
 
         frames.add(new TextureRegion(texture, 0, 0, 16, 16));
         frames.add(new TextureRegion(texture, 16, 0, 16, 16));

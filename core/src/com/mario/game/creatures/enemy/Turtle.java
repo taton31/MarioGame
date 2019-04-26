@@ -137,7 +137,7 @@ public class Turtle {
     private void doAnimation(){
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
-        Texture texture = new Texture("enemy/turtle.png");
+        Texture texture = new Texture(playGame.name_LVL.contains("black") ?  "enemy/turtleblack.png" :  "enemy/turtle.png");
 
         frames.add(new TextureRegion(texture, 0, 0, 16, 24));
         frames.add(new TextureRegion(texture, 16, 0, 16, 24));

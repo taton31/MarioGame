@@ -25,7 +25,7 @@ public class play_game implements Screen {
 
     public final MarioGame game;
 
-    String name_LVL;
+    public String name_LVL;
 
     private SpriteBatch batch;
     public OrthographicCamera camera;
@@ -193,7 +193,7 @@ public class play_game implements Screen {
     }
 
     String nexWorld (String a){
-        if (a.contains("11")) {game.number_world++; return "tile/map12.tmx"; }
+        if (a.contains("11")) {game.number_world++; return "tile/map12black.tmx"; }
         if (a.contains("12")) {game.number_world++; return "tile/map13.tmx";}
         if (a.contains("13")) {game.number_world++; return "tile/map14.tmx";}
         if (a.contains("14")) {game.number_world += 10 - 3; return "tile/map21.tmx";}

@@ -6,6 +6,8 @@ class Mario_HUD{
 
     private Mario mario;
 
+    private float time;
+
 
     Mario_HUD(Mario mar){
         mario = mar;
@@ -14,16 +16,27 @@ class Mario_HUD{
         mario.max_velocity = (int) (100 * mario.RATIO);
         mario.acceleration_G = (int) (1000 * mario.RATIO);
         mario.koff_acc = 0.3f;
+        mario.RUN = 1;
     }
 
     void press_right (){
+        if (mario.Timer - time < 0.5f) {
+            mario.max_velocity = (int) (100 * mario.RUN * mario.RATIO);
+            mario.RUN = 1.5f;
+        }
         mario.acceleration.x = mario.velocity_start;
         mario.press_button_right = true;
+        time = mario.Timer;
     }
 
     void press_left (){
+        if (mario.Timer - time < 0.5f) {
+            mario.RUN = 1.5f;
+            mario.max_velocity = (int) (100 * mario.RUN * mario.RATIO);
+        }
         mario.acceleration.x = - mario.velocity_start;
         mario.press_button_left = true;
+        time = mario.Timer;
     }
 
     void press_up (){
@@ -48,6 +61,8 @@ class Mario_HUD{
     }
 
     void unpress_button (){
+        mario.max_velocity = (int) (100 * mario.RATIO);
+        mario.RUN = 1;
         mario.press_button_left= mario.press_button_right = false;
     }
 

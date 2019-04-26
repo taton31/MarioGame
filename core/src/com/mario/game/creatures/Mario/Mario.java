@@ -4,6 +4,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.mario.game.Screens.play_game;
@@ -29,6 +30,7 @@ public class Mario implements Disposable {
      float koff_acc;
 
      float stateTimer;
+     float Timer;
      public float TimerInvulnerable;
      public boolean runningRight;
      boolean marioIsBig;
@@ -58,6 +60,7 @@ public class Mario implements Disposable {
      boolean press_button_left = false;
      boolean press_button_up = false;
      boolean press_button_down = false;
+     public float RUN;
 
 
 
@@ -100,11 +103,12 @@ public class Mario implements Disposable {
         mario_music = new Mario_music(this);
         //setMarioSize(true);
 
-
+        Timer = 0;
     }
 
 
     public void  update (float delta) {
+        Timer += delta;
         mario_move.update(delta);
         mario_collisium.update(delta);
         mario_graphics.update(delta);
