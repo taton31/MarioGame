@@ -66,7 +66,7 @@ public class Goomba {
         doAnimation();
         region = mushDie;
 
-        width = (int) (16 * RATIO);
+        width = (int) (16 * RATIO) - 1;
         height = (int) (16 * RATIO);
         timer = 0;
         die_time = 0;
