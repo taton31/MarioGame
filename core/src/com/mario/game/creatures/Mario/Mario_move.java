@@ -36,7 +36,7 @@ class Mario_move{
         //if (mario.position.x > 1000){
         //    mario.Endgame = true;}
         //////////////////////////////////////////////////////////////////////////////
-        mario.playGame.scene.testDesktop.update();
+        //mario.playGame.scene.testDesktop.update();
         if (mario.press_button_left) mario.acceleration.set(- mario.velocity_start, -mario.acceleration_G);
         if (mario.press_button_right) mario.acceleration.set(mario.velocity_start, -mario.acceleration_G);
         if (!(mario.press_button_left || mario.press_button_right) && mario.velocity.x !=0) {
@@ -102,7 +102,7 @@ class Mario_move{
         mario.velocity.set(0,mario.velocity_jump);
         mario.acceleration.set(0,0);
         //Mario. getFrame(0);
-        mario.mariodie.play();
+        mario.mariodie.play(mario.getPlayGame().game.MUS_ON / 100f);
         mario.playGame.game.gameMusic.stop();
     }
 
