@@ -150,12 +150,12 @@ public class Bricks extends MapObject_{
             }
 
             if (mario.isMarioBig()){
-                mario.getBreakblock().play();
+                mario.getBreakblock().play(mario.getPlayGame().game.MUS_ON / 100f);
                 map.delete_tile((int) ((mapObjects.get(k).rectangle[0] + 2) / tile_size), (int) (mapObjects.get(k).rectangle[1] / tile_size));
                 mapObjects.removeIndex(k);
 
             } else {
-                mario.getBump().play();
+                mario.getBump().play(mario.getPlayGame().game.MUS_ON / 100f);
                 //map.bump_tile((int) (mapObjects.get(k).rectangle[0] / tile_size), (int) (mapObjects.get(k).rectangle[1] / tile_size));
             }
 
