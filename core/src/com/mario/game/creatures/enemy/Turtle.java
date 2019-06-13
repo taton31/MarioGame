@@ -70,7 +70,7 @@ public class Turtle {
         doAnimation();
         region = turtleDie;
 
-        width = (int) (16 * RATIO);
+        width = (int) (16 * RATIO) - 1;
         height = (int) (24 * RATIO);
         timer = 0;
         die_time = 0;
