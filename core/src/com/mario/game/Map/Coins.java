@@ -154,16 +154,16 @@ public class Coins extends MapObject_ {
             if (mapObjects.get(k).empty) return;
 
                 if (mapObjects.get(k).coin) {
-                    mario.getCoin().play();
+                    mario.getCoin().play(mario.getPlayGame().game.MUS_ON / 100f);
                 } else if ( mapObjects.get(k).loopCoin){
-                    mario.getCoin().play();
+                    mario.getCoin().play(mario.getPlayGame().game.MUS_ON / 100f);
                     if (mapObjects.get(k).timeloop == -1f) mapObjects.get(k).timeloop = 0f;
                 }
                 else if (mapObjects.get(k).mursh) {
-                    mario.getPowerup_spawn().play();
+                    mario.getPowerup_spawn().play(mario.getPlayGame().game.MUS_ON / 100f);
                     map.getMushrooms().add(new mushroom(mapObjects.get(k).rectangle[0],mapObjects.get(k).rectangle[7], map.PlayGame, mario ));
                 } else {
-                    mario.getPowerup_spawn().play();
+                    mario.getPowerup_spawn().play(mario.getPlayGame().game.MUS_ON / 100f);
                     map.getMushroomsUP().add(new mushroomUP(mapObjects.get(k).rectangle[0],mapObjects.get(k).rectangle[7], map.PlayGame, mario ));
                     mapObjects.get(k).health = false;
                     mapObjects.get(k).coin = true;
@@ -173,7 +173,7 @@ public class Coins extends MapObject_ {
 
             if (!mapObjects.get(k).loopCoin) {
                 mapObjects.get(k).empty = true;
-                TiledMapTile tile = map.tiledMap.getTileSets().getTile(28);
+                TiledMapTile tile = map.tiledMap.getTileSets().getTile(map.PlayGame.name_LVL.contains("black") ? 70 : 28);
                 map.layer.getCell((int) ((mapObjects.get(k).rectangle[0]+2) / tile_size), (int) (mapObjects.get(k).rectangle[1] / tile_size)).setTile(null).setTile(tile);
                 ((OrthoCachedTiledMapRenderer) map.tiledMapRenderer).invalidateCache();
             }
@@ -189,7 +189,7 @@ public class Coins extends MapObject_ {
 
             if (mapObjects.get(k).timeloop > 3f) {
                 mapObjects.get(k).empty = true;
-                TiledMapTile tile = map.tiledMap.getTileSets().getTile(28);
+                TiledMapTile tile = map.tiledMap.getTileSets().getTile(map.PlayGame.name_LVL.contains("black") ? 70 : 28);
                 map.layer.getCell((int)((mapObjects.get(k).rectangle[0]+2) / tile_size), (int) (mapObjects.get(k).rectangle[1] / tile_size)).setTile(null).setTile(tile);
                 ((OrthoCachedTiledMapRenderer) map.tiledMapRenderer).invalidateCache();
                 mapObjects.get(k).timeloop = -1f;
